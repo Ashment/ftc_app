@@ -84,8 +84,7 @@ import java.util.List;
  * is explained below.
  */
 
-@Autonomous(name="Concept: Vuforia Navigation", group ="Concept")
-@Disabled
+@Autonomous(name="Concept: Vuforia Navigation", group ="ExternalTest")
 public class CV_Nav_Test extends LinearOpMode {
 
     public static final String TAG = "Vuforia Sample";
@@ -123,7 +122,7 @@ public class CV_Nav_Test extends LinearOpMode {
          * {@link Parameters} instance with which you initialize Vuforia.
          */
         VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters(R.id.cameraMonitorViewId);
-        parameters.vuforiaLicenseKey = "ATsODcD/////AAAAAVw2lR...d45oGpdljdOh5LuFB9nDNfckoxb8COxKSFX";
+        parameters.vuforiaLicenseKey = "AWdMEaX/////AAAAGcSixt1MAE+lhQaiaPlwENc5XjBb9Xa0aou/XtgVkrShYtA92ZzkrJ6/m3xZJJvr+oLFABnc/TWcuxMrGZPHCNiD1PoY4grQrDhTrHn+JhYW2jq30tH4mrjYBzDKQRuUU/fZyLgj9RUTKet0xKFd/qnEEAeRd69h6IgFDHN4l8sPWNksWEdN+oPXZZE6CNVRuClIYltYSVNFcP+KDyZYUfohhJXcwytPVxw+SsPlZ6qvgNeS55aRVyAh1ohldjfjL/XouGgolcwKgyD0/Ts6lt4mrldi5cehXVRyLaWoRYJiva0/BGCH+aeNumxMFwGYSR0NV/Fcgxaul310CAlJW/cVJVrc3kcGz6uEzsQVbt+A";
         parameters.cameraDirection = VuforiaLocalizer.CameraDirection.BACK;
         this.vuforia = ClassFactory.createVuforiaLocalizer(parameters);
 
@@ -142,9 +141,16 @@ public class CV_Nav_Test extends LinearOpMode {
         VuforiaTrackable blueTarget  = stonesAndChips.get(1);
         blueTarget.setName("BlueTarget");  // Chips
 
+        VuforiaTrackables ftcTrackables = this.vuforia.loadTrackablesFromAsset("FTC_2016-17");
+        VuforiaTrackable wheels = ftcTrackables.get(0);
+        VuforiaTrackable tools = ftcTrackables.get(1);
+        VuforiaTrackable legos = ftcTrackables.get(2);
+        VuforiaTrackable gears = ftcTrackables.get(3);
+
+
         /** For convenience, gather together all the trackable objects in one easily-iterable collection */
         List<VuforiaTrackable> allTrackables = new ArrayList<VuforiaTrackable>();
-        allTrackables.addAll(stonesAndChips);
+        allTrackables.addAll(ftcTrackables);
 
         /**
          * We use units of mm here because that's the recommended units of measurement for the
@@ -229,6 +235,32 @@ public class CV_Nav_Test extends LinearOpMode {
         * - First we rotate it 90 around the field's X axis to flip it upright
         * - Finally, we translate it along the Y axis towards the blue audience wall.
         */
+
+        //--------------------------------Tools is where Red Target is------------------------------
+        OpenGLMatrix toolsLocationOnField = OpenGLMatrix
+                /* Then we translate the target off to the RED WALL. Our translation here
+                is a negative translation in X.*/
+                .translation(-mmFTCFieldWidth/2, 0, 0)
+                .multiplied(Orientation.getRotationMatrix(
+                        /* First, in the fixed (field) coordinate system, we rotate 90deg in X, then 90 in Z */
+                        AxesReference.EXTRINSIC, AxesOrder.XZX,
+                        AngleUnit.DEGREES, 90, 90, 0));
+        tools.setLocation(toolsLocationOnField);
+        RobotLog.ii(TAG, "Tools Location", format(toolsLocationOnField));
+
+        //--------------------------------Tools is where blue Target is-----------------------------
+        OpenGLMatrix legosLocationOnField = OpenGLMatrix
+                /* Then we translate the target off to the Blue Audience wall.
+                Our translation here is a positive translation in Y.*/
+                .translation(0, mmFTCFieldWidth / 2, 0)
+                .multiplied(Orientation.getRotationMatrix(
+                        /* First, in the fixed (field) coordinate system, we rotate 90deg in X */
+                        AxesReference.EXTRINSIC, AxesOrder.XZX,
+                        AngleUnit.DEGREES, 90, 0, 0));
+        legos.setLocation(legosLocationOnField);
+        RobotLog.ii(TAG, "Legos Location", format(legosLocationOnField));
+
+
         OpenGLMatrix blueTargetLocationOnField = OpenGLMatrix
                 /* Then we translate the target off to the Blue Audience wall.
                 Our translation here is a positive translation in Y.*/
@@ -266,6 +298,8 @@ public class CV_Nav_Test extends LinearOpMode {
          */
         ((VuforiaTrackableDefaultListener)redTarget.getListener()).setPhoneInformation(phoneLocationOnRobot, parameters.cameraDirection);
         ((VuforiaTrackableDefaultListener)blueTarget.getListener()).setPhoneInformation(phoneLocationOnRobot, parameters.cameraDirection);
+        ((VuforiaTrackableDefaultListener)legos.getListener()).setPhoneInformation(phoneLocationOnRobot, parameters.cameraDirection);
+        ((VuforiaTrackableDefaultListener)tools.getListener()).setPhoneInformation(phoneLocationOnRobot, parameters.cameraDirection);
 
         /**
          * A brief tutorial: here's how all the math is going to work:
@@ -293,6 +327,7 @@ public class CV_Nav_Test extends LinearOpMode {
 
         /** Start tracking the data sets we care about. */
         stonesAndChips.activate();
+        ftcTrackables.activate();
 
         while (opModeIsActive()) {
 
