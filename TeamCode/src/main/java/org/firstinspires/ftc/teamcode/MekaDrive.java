@@ -17,11 +17,11 @@ import java.util.TimerTask;
  *
  * Motor takeover                   √--
  * Exponential                      √--
- * Acceleration                     ---
- * Mechanim Movement                ---
- * TeleOpControls                   ---
+ * Acceleration                     √--
+ * Mechanim Movement                √--
+ * TeleOpControls                   √--
  * Go by encoder                    ---
- * Getters and Setters              ---
+ * Getters and Setters              √--
  */
 
 public class MekaDrive extends OpMode {

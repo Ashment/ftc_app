@@ -66,12 +66,12 @@ public class MekaOp extends OpMode{
         meka.SetPower(joy1.left_stick_y, joy1.right_stick_y);
 
         //Strafe Input (Trigger analog input between 0 and 1)
-        if(joy1.right_trigger * 128> meka.getInputThreshold()){
+        if(joy1.right_trigger > meka.getInputThreshold()){
             if(joy1.left_stick_y < meka.getInputThreshold() && joy1.right_stick_y < meka.getInputThreshold()) {
                 meka.Strafe(joy1.left_trigger, 1);
             }
         }
-        if(joy1.left_trigger * 128> meka.getInputThreshold()){
+        if(joy1.left_trigger > meka.getInputThreshold()){
             if(joy1.left_stick_y < meka.getInputThreshold() && joy1.right_stick_y < meka.getInputThreshold()) {
                 meka.Strafe(joy1.left_trigger, -1);
             }
