@@ -88,8 +88,8 @@ public class MekaDrive extends OpMode {
     }
 
     public void MekaSetup(){
-        speedUpdater = new Timer("speedUpdater",true);
-        speedUpdater.scheduleAtFixedRate(new speedUpdateTask(), 0, speedUpdatePeriod);
+        //speedUpdater = new Timer("speedUpdater",true);
+        //speedUpdater.scheduleAtFixedRate(new speedUpdateTask(), 0, speedUpdatePeriod);
         motFL.setDirection(DcMotor.Direction.REVERSE);
         motBL.setDirection(DcMotor.Direction.REVERSE);
 
@@ -161,7 +161,7 @@ public class MekaDrive extends OpMode {
         }
     }
 
-    private class speedUpdateTask extends TimerTask{
+    /*private class speedUpdateTask extends TimerTask{
         @Override
         public void run() {
             if (enableAccel) {
@@ -212,7 +212,7 @@ public class MekaDrive extends OpMode {
             }
             UpdateMotorPower();
         }
-    }
+    }*/
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////// GETTERS AND SETTERS /////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////

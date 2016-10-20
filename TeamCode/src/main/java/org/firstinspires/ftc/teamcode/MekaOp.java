@@ -19,7 +19,6 @@ public class MekaOp extends OpMode{
     DcMotor motfl,motfr,motrr,motrl;
 
     //Drivers
-    ButtonState joy1, joy2;
     MekaDrive meka;
 
     @Override
@@ -30,36 +29,19 @@ public class MekaOp extends OpMode{
         //Drivers and Objects Setup
         try{
             meka = new MekaDrive(motfl, motfr, motrr, motrl, false);
+            meka.setEnableExpo(false);
             telemetry.addData("Sucess: ", "MekaDrive Setup Complete.");
         }catch (Exception e){
             telemetry.addData("ERROR: ", "MekaDrive Setup Failure.");
         }
-
-        joy1 = new ButtonState();
-        joy2 = new ButtonState();
-
     }
 
     @Override
     public void loop(){
-        joy1.update(gamepad1);
-        joy2.update(gamepad2);
-
-
         //Input Detection
-        //Reverse Motor Power Polarity
-        if(joy1.right_stick_button_press()){
-            meka.motorPolarity = meka.motorPolarity * -1;
-        }
 
         //Loop Methods
         UpdateMovementInput();
-
-        //Telemetry
-        telemetry.addData("LStickY: ", joy1.left_stick_y);
-        telemetry.addData("RStickY: ", joy1.right_stick_y);
-        telemetry.addData("LTrigger: ", joy1.left_trigger);
-        telemetry.addData("RTrigger: ", joy1.right_trigger);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -67,10 +49,18 @@ public class MekaOp extends OpMode{
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
     public void UpdateMovementInput(){
-        meka.SetRawPower(gamepad1.left_stick_y, gamepad1.right_stick_y);
+        float lSticky, rSticky;
+        lSticky = gamepad1.left_stick_y;
+        rSticky = gamepad1.right_stick_y;
+        meka.SetPower(lSticky, rSticky);
+
+        telemetry.addData("LStickY: ", lSticky);
+        telemetry.addData("RStickY: ", rSticky);
+        telemetry.addData("LTrigger: ", gamepad1.left_trigger);
+        telemetry.addData("RTrigger: ", gamepad1.right_trigger);
 
         //Strafe Input (Trigger analog input between 0 and 1)
-        if(joy1.right_trigger > meka.getInputThreshold()){
+        /*if(joy1.right_trigger > meka.getInputThreshold()){
             if(joy1.left_stick_y < meka.getInputThreshold() && joy1.right_stick_y < meka.getInputThreshold()) {
                 meka.Strafe(joy1.left_trigger, 1);
             }
@@ -79,7 +69,7 @@ public class MekaOp extends OpMode{
             if(joy1.left_stick_y < meka.getInputThreshold() && joy1.right_stick_y < meka.getInputThreshold()) {
                 meka.Strafe(joy1.left_trigger, -1);
             }
-        }
+        }*/
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
