@@ -1,11 +1,14 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 /**
  * Created by Ashment on 10/17/16.
  */
+
+@TeleOp (name="MekaOp", group="Test")
 public class MekaOp extends OpMode{
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -24,7 +27,7 @@ public class MekaOp extends OpMode{
         //Hardware Setup
         setupMotors();
 
-        //Drivers Setup
+        //Drivers and Objects Setup
         try{
             meka = new MekaDrive(motfl, motfr, motrr, motrl, false);
             telemetry.addData("Sucess: ", "MekaDrive Setup Complete.");
@@ -64,7 +67,7 @@ public class MekaOp extends OpMode{
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
     public void UpdateMovementInput(){
-        meka.SetPower(joy1.left_stick_y, joy1.right_stick_y);
+        meka.SetRawPower(gamepad1.left_stick_y, gamepad1.right_stick_y);
 
         //Strafe Input (Trigger analog input between 0 and 1)
         if(joy1.right_trigger > meka.getInputThreshold()){

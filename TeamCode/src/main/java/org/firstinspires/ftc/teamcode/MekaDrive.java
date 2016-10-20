@@ -1,7 +1,10 @@
 package org.firstinspires.ftc.teamcode;
 
+import android.graphics.Path;
+
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.Range;
 
 import java.util.Timer;
@@ -78,12 +81,19 @@ public class MekaDrive extends OpMode {
         motFR = mot2;
         motBR = mot3;
         motBL = mot4;
+
+        MekaSetup();
+
         telemetry.addData("MekaDrive: ", "Activated.");
     }
 
     public void MekaSetup(){
         speedUpdater = new Timer("speedUpdater",true);
         speedUpdater.scheduleAtFixedRate(new speedUpdateTask(), 0, speedUpdatePeriod);
+        motFL.setDirection(DcMotor.Direction.REVERSE);
+        motBL.setDirection(DcMotor.Direction.REVERSE);
+
+        telemetry.addData("MekaDrive: ", "Setup.");
     }
 
     private double Exponentiate(double input, double expoFactor, double max){
@@ -102,7 +112,7 @@ public class MekaDrive extends OpMode {
     }
 
     public void SetRawPower(double L, double R){
-        speedFL= Range.clip(L, -1, 1);
+        speedFL=Range.clip(L, -1, 1);
         speedFR=Range.clip(R, -1, 1);
         speedBL=Range.clip(L, -1, 1);
         speedBR=Range.clip(R, -1, 1);
