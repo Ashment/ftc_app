@@ -83,6 +83,7 @@ public class MekaOp extends OpMode{
         motfr.setPower(Range.clip(R, -1, 1));
         motrl.setPower(Range.clip(L, -1, 1));
         motrr.setPower(Range.clip(R, -1, 1));
+        telemetry.addData("SetPower", "SetPowerYEHHHH");
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
