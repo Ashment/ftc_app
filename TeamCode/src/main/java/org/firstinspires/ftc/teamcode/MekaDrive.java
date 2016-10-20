@@ -241,6 +241,18 @@ public class MekaDrive extends OpMode {
     public void setMotRR(DcMotor motRR) {
         this.motBR = motRR;
     }
+    public double getSpeedFL(){
+        return speedFL;
+    }
+    public double getSpeedFR(){
+        return speedFR;
+    }
+    public double getSpeedBL(){
+        return speedBL;
+    }
+    public double getSpeedBR(){
+        return speedBR;
+    }
 
     public double getExponent() {
         return this.exponent;
@@ -260,7 +272,6 @@ public class MekaDrive extends OpMode {
     public void setInputThreshold(double in) {
         this.inputThreshold = in;
     }
-
 
     public boolean isEnableExpo() {
         return this.enableExpo;
