@@ -51,12 +51,12 @@ public class PID extends OpMode {
         time = c.getTimeInMillis();
 
         //get motor's position and find speed
-        float enc = thisMotor.getCurrentPosition();
+        int enc = thisMotor.getCurrentPosition();
         speed = rotSpeed(enc);
     }
 
     public float rotSpeed(float encVal){
-        float sp = (Math.abs(encVal - lastEncValue)) / (deltaTime);
+        float sp = (float)(Math.abs(encVal - lastEncValue)) / (deltaTime);
         lastEncValue = encVal;
         return sp;
     }

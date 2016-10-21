@@ -59,10 +59,10 @@ public class MekaOp extends OpMode{
         UpdateMovementInput();
 
         //update PID values and speeds
-        pidfl.encUpdate(); telemetry.addData("PID Speed: ", pidfl.speed);
-        pidfr.encUpdate(); telemetry.addData("PID Speed: ", pidfr.speed);
-        pidrr.encUpdate(); telemetry.addData("PID Speed: ", pidrr.speed);
-        pidrl.encUpdate(); telemetry.addData("PID Speed: ", pidrl.speed);
+        pidfl.encUpdate(); telemetry.addData("PID Speed: ", Float.toString(pidfl.speed));
+        pidfr.encUpdate(); telemetry.addData("PID Speed: ", Float.toString(pidfr.speed));
+        pidrr.encUpdate(); telemetry.addData("PID Speed: ", Float.toString(pidrr.speed));
+        pidrl.encUpdate(); telemetry.addData("PID Speed: ", Float.toString(pidrl.speed));
 
     }
 
