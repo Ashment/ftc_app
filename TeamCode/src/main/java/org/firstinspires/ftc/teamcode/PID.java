@@ -52,10 +52,11 @@ public class PID extends OpMode {
         c = Calendar.getInstance();
         deltaTime = c.getTimeInMillis() - time;
         time = c.getTimeInMillis();
+        master.AddTelemetry("PID TIME " + thisMotor.getDeviceName() + ": ", Float.toString(time));
 
         //get motor's position and find speed
         int enc = thisMotor.getCurrentPosition();
-        master.AddTelemetry("PID" + thisMotor.getDeviceName() + ": ", Float.toString(enc));
+        master.AddTelemetry("PID ENC " + thisMotor.getDeviceName() + ": ", Float.toString(enc));
         speed = rotSpeed(enc);
     }
 
