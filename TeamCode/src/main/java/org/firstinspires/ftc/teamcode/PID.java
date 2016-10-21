@@ -26,6 +26,7 @@ public class PID extends OpMode {
         c = Calendar.getInstance();
         time = 0;
         thisMotor = mot;
+        speed = 0;
         init();
     }
 
@@ -55,7 +56,7 @@ public class PID extends OpMode {
     }
 
     public float rotSpeed(float encVal){
-        float sp = (Math.abs(encVal - lastEncValue)) / deltaTime;
+        float sp = (Math.abs(encVal - lastEncValue)) / (deltaTime);
         lastEncValue = encVal;
         return sp;
     }
