@@ -18,6 +18,7 @@ public class MekaOp extends OpMode{
 
     //Basics
     DcMotor motfl,motfr,motrr,motrl;
+    PID pidfl, pidfr, pidrr, pidrl;
 
     //Drivers
     MekaDrive meka;
@@ -35,14 +36,33 @@ public class MekaOp extends OpMode{
         }catch (Exception e){
             telemetry.addData("ERROR: ", "MekaDrive Setup Failure.");
         }
+
+        try{
+            //create a PID for each motfl
+            pidfl = new PID(motfl);
+            pidfr = new PID(motfr);
+            pidrr = new PID(motrr);
+            pidrl = new PID(motrl);
+
+            telemetry.addData("Success: ", "PID Initialization Complete.");
+        }catch(Exception e){
+            telemetry.addData("ERROR: ", "PIDs Initialization Failure.");
+        }
     }
 
     @Override
     public void loop(){
         //Input Detection
 
-        //Loop Methods
+        /////////////Loop Methods/////////////
+        //update movements
         UpdateMovementInput();
+
+        //update PID values and speeds
+        pidfl.encUpdate(); telemetry.addData("PID Speed: ", pidfl.speed);
+        pidfr.encUpdate(); telemetry.addData("PID Speed: ", pidfr.speed);
+        pidrr.encUpdate(); telemetry.addData("PID Speed: ", pidrr.speed);
+        pidrl.encUpdate(); telemetry.addData("PID Speed: ", pidrl.speed);
 
     }
 
