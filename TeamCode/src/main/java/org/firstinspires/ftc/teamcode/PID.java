@@ -46,8 +46,8 @@ public class PID extends OpMode {
 
     public void encUpdate(){
         //Set deltaTime based on device time
-        deltaTime = c.getTimeInMillis() - time;
         c = Calendar.getInstance();
+        deltaTime = c.getTimeInMillis() - time;
         time = c.getTimeInMillis();
 
         //get motor's position and find speed
