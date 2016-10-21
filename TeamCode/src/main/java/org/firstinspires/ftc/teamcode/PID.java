@@ -21,13 +21,15 @@ public class PID extends OpMode {
     float lastEncValue;
 
     public float speed;
+    MekaOp master;
 
-    public PID(DcMotor mot){
+    public PID(DcMotor mot, MekaOp m){
         c = Calendar.getInstance();
         time = 0;
         thisMotor = mot;
         speed = 0;
         init();
+        master = m;
     }
 
     @Override
@@ -36,6 +38,7 @@ public class PID extends OpMode {
         time = c.getTimeInMillis();
 
         thisMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        lastEncValue = 0;
         thisMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
@@ -52,6 +55,7 @@ public class PID extends OpMode {
 
         //get motor's position and find speed
         int enc = thisMotor.getCurrentPosition();
+        master.AddTelemetry("PID" + thisMotor.getDeviceName() + ": ", Float.toString(enc));
         speed = rotSpeed(enc);
     }
 

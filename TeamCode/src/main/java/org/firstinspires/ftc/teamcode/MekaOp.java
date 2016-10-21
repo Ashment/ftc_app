@@ -39,10 +39,10 @@ public class MekaOp extends OpMode{
 
         try{
             //create a PID for each motfl
-            pidfl = new PID(motfl);
-            pidfr = new PID(motfr);
-            pidrr = new PID(motrr);
-            pidrl = new PID(motrl);
+            pidfl = new PID(motfl, this);
+            pidfr = new PID(motfr, this);
+            pidrr = new PID(motrr, this);
+            pidrl = new PID(motrl, this);
 
             telemetry.addData("Success: ", "PID Initialization Complete.");
         }catch(Exception e){
@@ -135,6 +135,10 @@ public class MekaOp extends OpMode{
         }catch (Exception e){
             telemetry.addData("ERROR",e.toString());
         }
+    }
+
+    public void AddTelemetry(String xx, String yy){
+        telemetry.addData(xx, yy);
     }
 
 }
