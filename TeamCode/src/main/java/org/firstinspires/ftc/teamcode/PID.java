@@ -4,6 +4,8 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 import java.util.Calendar;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.GregorianCalendar;
 
 /**
@@ -14,14 +16,17 @@ public class PID extends OpMode {
     //--------------
     DcMotor thisMotor;
 
-    Calendar c;
     float time;
     float deltaTime;
 
     float lastEncValue;
 
     public float speed;
+    private double curSpeed;
     MekaOp master;
+
+    Calendar c;
+    Timer deltaTimer;
 
     public PID(DcMotor mot, MekaOp m){
         c = Calendar.getInstance();
@@ -40,6 +45,8 @@ public class PID extends OpMode {
         thisMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         lastEncValue = 0;
         thisMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+
     }
 
     @Override
@@ -60,7 +67,9 @@ public class PID extends OpMode {
         speed = rotSpeed(enc);
     }
 
+    //Returns speed
     public float rotSpeed(float encVal){
+        // Δpulses / Δtime
         float sp = (float)(Math.abs(encVal - lastEncValue)) / (deltaTime);
         lastEncValue = encVal;
         return sp;

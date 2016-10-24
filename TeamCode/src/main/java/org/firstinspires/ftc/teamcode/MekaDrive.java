@@ -76,13 +76,20 @@ public class MekaDrive extends OpMode {
 
     }
 
-    public MekaDrive(DcMotor mot1, DcMotor mot2, DcMotor mot3, DcMotor mot4, boolean isAutonomous) {
+    public MekaDrive(DcMotor mot1, DcMotor mot2, DcMotor mot3, DcMotor mot4, boolean useEncoders, boolean isAutonomous) {
         motFL = mot1;
         motFR = mot2;
         motBR = mot3;
         motBL = mot4;
 
         MekaSetup();
+
+        if(useEncoders){
+            motFL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            motFR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            motBL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            motBR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        }
 
         telemetry.addData("MekaDrive: ", "Activated.");
     }
@@ -91,7 +98,7 @@ public class MekaDrive extends OpMode {
         //speedUpdater = new Timer("speedUpdater",true);
         //speedUpdater.scheduleAtFixedRate(new speedUpdateTask(), 0, speedUpdatePeriod);
         motFL.setDirection(DcMotor.Direction.REVERSE);
-        motBL.setDirection(DcMotor.Direction.REVERSE);
+        motBR.setDirection(DcMotor.Direction.REVERSE);
         motorPolarity = 1;
 
         telemetry.addData("MekaDrive: ", "Setup.");

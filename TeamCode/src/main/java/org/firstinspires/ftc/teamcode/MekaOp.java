@@ -5,6 +5,8 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.Range;
 
+import java.util.TimerTask;
+
 /**
  * Created by Ashment on 10/17/16.
  */
@@ -30,7 +32,7 @@ public class MekaOp extends OpMode{
 
         //Drivers and Objects Setup
         try{
-            meka = new MekaDrive(motfl, motfr, motrr, motrl, false);
+            meka = new MekaDrive(motfl, motfr, motrr, motrl, true, false);
             meka.setEnableExpo(false);
             telemetry.addData("Sucess: ", "MekaDrive Setup Complete.");
         }catch (Exception e){
@@ -140,5 +142,14 @@ public class MekaOp extends OpMode{
     public void AddTelemetry(String xx, String yy){
         telemetry.addData(xx, yy);
     }
+
+
+    /*
+    private class speedUpdateTask extends TimerTask {
+        @Override
+        public void run() {
+
+        }
+    }*/
 
 }
