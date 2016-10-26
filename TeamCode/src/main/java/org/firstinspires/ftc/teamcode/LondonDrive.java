@@ -81,15 +81,21 @@ public class LondonDrive extends OpMode {
     public void LondonSetup(){
         //speedUpdater = new Timer("speedUpdater",true);
         //speedUpdater.scheduleAtFixedRate(new speedUpdateTask(), 0, speedUpdatePeriod);
-        motFL.setDirection(DcMotor.Direction.REVERSE);
         motBL.setDirection(DcMotor.Direction.REVERSE);
+        motBR.setDirection(DcMotor.Direction.REVERSE);
 
-        telemetry.addData("LondonDrive: ", "Setup.");
+        //Reset all motors and run with encoder
+        motFL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        motFR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        motBL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        motBR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        motFL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        motFR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        motBL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        motBR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
     public void SetPower(double L, double R, boolean std){
-        if(Math.abs(L)<inputThreshold)L=0.0;
-        if(Math.abs(R)<inputThreshold)R=0.0;
         if(std){
             motorPolarity = regularPolarity;
         }
@@ -158,9 +164,9 @@ public class LondonDrive extends OpMode {
         this.motBR = motRR;
     }
     public double getInputThreshold() {
-        return this.inputThreshold;
+        return inputThreshold;
     }
     public void setInputThreshold(double in) {
-        this.inputThreshold = in;
+        inputThreshold = in;
     }
 }

@@ -65,6 +65,7 @@ public class LondonOp extends OpMode{
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
     public void UpdateMovementInput(){
+        //Input
         float lSticky, rSticky;
         lSticky = gamepad1.left_stick_y;
         rSticky = gamepad1.right_stick_y;
@@ -81,6 +82,8 @@ public class LondonOp extends OpMode{
             }else if(joy1.right_trigger > london.getInputThreshold()){
                 london.SetStrafe(1 * joy1.right_trigger);
                 telemetry.addData("STRAFE R: ", (1 * joy1.right_trigger));
+            }else{
+                london.SetPower(0, 0, true);
             }
         }else{
             //Analog Movement Input
