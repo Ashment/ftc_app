@@ -151,7 +151,7 @@ public class MekaDrive extends OpMode {
 
     public void Strafe(double pow, double dirPolarity){
         pow = pow * dirPolarity;
-        pow = Range.clip(pow, -1, 1);
+        pow = Range.clip(pow, 0, 1);
         /*
         targetFL = pow;
         targetBR = pow;
@@ -163,6 +163,7 @@ public class MekaDrive extends OpMode {
         speedFR = -pow;
         speedBL = -pow;
 
+        UpdateMotorPower();
     }
 
     private void UpdateMotorPower(){
