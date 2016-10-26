@@ -99,17 +99,12 @@ public class MekaOp extends OpMode{
         telemetry.addData("SpeedBL", meka.getSpeedBL());
         telemetry.addData("SpeedBL", meka.getSpeedBR());
 
-
+        //Analog Movement Input
+        meka.SetRawPower(lSticky, rSticky);
 
         //Strafe Input (Trigger analog input between 0 and 1)
-        if(meka.getSpeedBL() + meka.getSpeedBR() + meka.getSpeedFL() + meka.getSpeedFR() == 0) {
-            meka.Strafe(joy1.left_trigger, 1);
-            meka.Strafe(joy1.right_trigger, -1);
-        }else
-        //Analog Movement Input
-        if (lSticky > meka.getInputThreshold() || rSticky > meka.getInputThreshold()) {
-            meka.SetRawPower(lSticky, rSticky);
-        }
+        meka.Strafe(joy1.left_trigger, 1);
+        meka.Strafe(joy1.right_trigger, -1);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
