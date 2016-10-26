@@ -89,6 +89,11 @@ public class MekaDrive extends OpMode {
             motFR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             motBL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             motBR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        }else{
+            motFL.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            motFR.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            motBL.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            motBR.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         }
 
         telemetry.addData("MekaDrive: ", "Activated.");
@@ -127,6 +132,7 @@ public class MekaDrive extends OpMode {
         UpdateMotorPower();
     }
 
+
     public void SetPower(double L, double R){
         if(enableExpo){
             L = Exponentiate(L, exponent, 1);
@@ -146,11 +152,17 @@ public class MekaDrive extends OpMode {
     public void Strafe(double pow, double dirPolarity){
         pow = pow * dirPolarity;
         pow = Range.clip(pow, -1, 1);
-
+        /*
         targetFL = pow;
         targetBR = pow;
         targetFR = -pow;
         targetBL = -pow;
+        */
+        speedFL = pow;
+        speedBR = pow;
+        speedFR = -pow;
+        speedBL = -pow;
+
     }
 
     private void UpdateMotorPower(){

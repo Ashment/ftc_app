@@ -24,6 +24,7 @@ public class MekaOp extends OpMode{
 
     //Drivers
     MekaDrive meka;
+    ButtonState joy1, joy2;
 
     @Override
     public void init(){
@@ -32,7 +33,14 @@ public class MekaOp extends OpMode{
 
         //Drivers and Objects Setup
         try{
-            meka = new MekaDrive(motfl, motfr, motrr, motrl, true, false);
+            joy1 = new ButtonState();
+            joy2 = new ButtonState();
+        }catch (Exception e){
+            telemetry.addData("ERROR:", e.toString());
+        }
+
+        try{
+            meka = new MekaDrive(motfl, motfr, motrr, motrl, false, false);
             meka.setEnableExpo(false);
             telemetry.addData("Sucess: ", "MekaDrive Setup Complete.");
         }catch (Exception e){
@@ -55,16 +63,21 @@ public class MekaOp extends OpMode{
     @Override
     public void loop(){
         //Input Detection
+        joy1.update(gamepad1);
+        joy2.update(gamepad2);
 
         /////////////Loop Methods/////////////
         //update movements
         UpdateMovementInput();
 
+        /*
         //update PID values and speeds
         pidfl.encUpdate(); telemetry.addData("PID Speed: ", Float.toString(pidfl.speed));
         pidfr.encUpdate(); telemetry.addData("PID Speed: ", Float.toString(pidfr.speed));
         pidrr.encUpdate(); telemetry.addData("PID Speed: ", Float.toString(pidrr.speed));
         pidrl.encUpdate(); telemetry.addData("PID Speed: ", Float.toString(pidrl.speed));
+        */
+
 
     }
 
@@ -80,24 +93,18 @@ public class MekaOp extends OpMode{
 
         telemetry.addData("LStickY: ", lSticky);
         telemetry.addData("RStickY: ", rSticky);
-        telemetry.addData("LTrigger: ", gamepad1.left_trigger);
-        telemetry.addData("RTrigger: ", gamepad1.right_trigger);
+        telemetry.addData("LTrigger: ", joy1.left_trigger);
+        telemetry.addData("RTrigger: ", joy1.right_trigger);
         telemetry.addData("SpeedFL", meka.getSpeedFL());
         telemetry.addData("SpeedFR", meka.getSpeedFR());
         telemetry.addData("SpeedBL", meka.getSpeedBL());
         telemetry.addData("SpeedBL", meka.getSpeedBR());
 
         //Strafe Input (Trigger analog input between 0 and 1)
-        /*if(joy1.right_trigger > meka.getInputThreshold()){
-            if(joy1.left_stick_y < meka.getInputThreshold() && joy1.right_stick_y < meka.getInputThreshold()) {
-                meka.Strafe(joy1.left_trigger, 1);
-            }
+        if(meka.getSpeedBL() + meka.getSpeedBR() + meka.getSpeedFL() + meka.getSpeedFR() == 0) {
+            meka.Strafe(joy1.left_trigger, 1);
+            meka.Strafe(joy1.left_trigger, -1);
         }
-        if(joy1.left_trigger > meka.getInputThreshold()){
-            if(joy1.left_stick_y < meka.getInputThreshold() && joy1.right_stick_y < meka.getInputThreshold()) {
-                meka.Strafe(joy1.left_trigger, -1);
-            }
-        }*/
     }
 
     public void SetRawPower(double L, double R){
