@@ -78,7 +78,10 @@ public class MekaOp extends OpMode{
         pidrl.encUpdate(); telemetry.addData("PID Speed: ", Float.toString(pidrl.speed));
         */
 
-
+        telemetry.addData("SpeedFL", meka.getSpeedFL());
+        telemetry.addData("SpeedFR", meka.getSpeedFR());
+        telemetry.addData("SpeedBL", meka.getSpeedBL());
+        telemetry.addData("SpeedBR", meka.getSpeedBR());
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
