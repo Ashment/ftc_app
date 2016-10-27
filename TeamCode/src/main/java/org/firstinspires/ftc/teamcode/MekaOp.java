@@ -77,11 +77,6 @@ public class MekaOp extends OpMode{
         pidrr.encUpdate(); telemetry.addData("PID Speed: ", Float.toString(pidrr.speed));
         pidrl.encUpdate(); telemetry.addData("PID Speed: ", Float.toString(pidrl.speed));
         */
-
-        telemetry.addData("SpeedFL", meka.getSpeedFL());
-        telemetry.addData("SpeedFR", meka.getSpeedFR());
-        telemetry.addData("SpeedBL", meka.getSpeedBL());
-        telemetry.addData("SpeedBR", meka.getSpeedBR());
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -100,14 +95,24 @@ public class MekaOp extends OpMode{
         telemetry.addData("SpeedFL", meka.getSpeedFL());
         telemetry.addData("SpeedFR", meka.getSpeedFR());
         telemetry.addData("SpeedBL", meka.getSpeedBL());
-        telemetry.addData("SpeedBL", meka.getSpeedBR());
+        telemetry.addData("SpeedBR", meka.getSpeedBR());
 
         //Analog Movement Input
-        meka.SetRawPower(lSticky, rSticky);
+        if(Math.abs(lSticky) > meka.getInputThreshold() || Math.abs(rSticky) > meka.getInputThreshold()){
+            meka.SetRawPower(lSticky, rSticky);
+        }else if(joy1.left_trigger > 0){
+            meka.SetRawStrafe(joy1.left_trigger, -joy1.left_trigger);
+            telemetry.addData("Strafing: ", "Left");
+        }else if(joy1.right_trigger > 0){
+            meka.SetRawStrafe(-joy1.right_trigger, joy1.right_trigger);
+            telemetry.addData("Strafing: ", "Right");
+        }else{
+            meka.ZeroMotors();
+        }
 
-        //Strafe Input (Trigger analog input between 0 and 1)
-        meka.Strafe(joy1.left_trigger, 1);
-        meka.Strafe(joy1.right_trigger, -1);
+        if(joy1.right_stick_button_press()){
+            meka.setMotorPolarity(meka.getMotorPolarity() * -1);
+        }
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////

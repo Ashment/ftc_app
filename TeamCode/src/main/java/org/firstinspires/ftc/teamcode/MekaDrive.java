@@ -132,6 +132,14 @@ public class MekaDrive extends OpMode {
         UpdateMotorPower();
     }
 
+    public void SetRawStrafe(double L, double R){
+        speedFL=Range.clip(L, -1, 1);
+        speedFR=Range.clip(R, -1, 1);
+        speedBL=Range.clip(R, -1, 1);
+        speedBR=Range.clip(L, -1, 1);
+        UpdateMotorPower();
+    }
+
 
     public void SetPower(double L, double R){
         if(enableExpo){
@@ -152,16 +160,20 @@ public class MekaDrive extends OpMode {
     public void Strafe(double pow, double dirPolarity){
         pow = pow * dirPolarity;
         pow = Range.clip(pow, -1, 1);
-        /*
+
         targetFL = pow;
         targetBR = pow;
         targetFR = -pow;
         targetBL = -pow;
-        */
-        speedFL = pow;
-        speedBR = pow;
-        speedFR = -pow;
-        speedBL = -pow;
+
+        UpdateMotorPower();
+    }
+
+    public void ZeroMotors(){
+        speedFL = 0;
+        speedFR = 0;
+        speedBL = 0;
+        speedBR = 0;
 
         UpdateMotorPower();
     }
