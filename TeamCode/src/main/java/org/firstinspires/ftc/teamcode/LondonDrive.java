@@ -82,7 +82,7 @@ public class LondonDrive extends OpMode {
         //speedUpdater = new Timer("speedUpdater",true);
         //speedUpdater.scheduleAtFixedRate(new speedUpdateTask(), 0, speedUpdatePeriod);
         motBL.setDirection(DcMotor.Direction.REVERSE);
-        motBR.setDirection(DcMotor.Direction.REVERSE);
+        motFL.setDirection(DcMotor.Direction.REVERSE);
 
         //Reset all motors and run with encoder
         motFL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
