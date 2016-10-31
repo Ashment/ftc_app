@@ -40,7 +40,7 @@ public class MekaOp extends OpMode{
         }
 
         try{
-            meka = new MekaDrive(motfl, motfr, motrr, motrl, false, false);
+            meka = new MekaDrive(motfl, motfr, motrr, motrl, true, false);
             meka.setEnableExpo(false);
             telemetry.addData("Sucess: ", "MekaDrive Setup Complete.");
         }catch (Exception e){
