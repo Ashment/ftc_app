@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.Range;
 
 import java.util.TimerTask;
@@ -18,18 +19,30 @@ public class MekaOp extends OpMode{
     ///////////////////////////////////////// VARIABLES ////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    /*
+    Motors: fl, fr, rl, rr, loader, shooter
+    Servos: buttonServo, gateServo
+    */
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
     //Basics
-    DcMotor motfl,motfr,motrr,motrl;
+    DcMotor motfl,motfr,motrr,motrl, loader, shooter;
+    Servo button, gate;
     PID pidfl, pidfr, pidrr, pidrl;
 
     //Drivers
     MekaDrive meka;
+    MekaServo servoo;
+    Firing fire;
     ButtonState joy1, joy2;
 
     @Override
     public void init(){
         //Hardware Setup
         setupMotors();
+        setupServos();
 
         //Drivers and Objects Setup
         try{
@@ -37,6 +50,20 @@ public class MekaOp extends OpMode{
             joy2 = new ButtonState();
         }catch (Exception e){
             telemetry.addData("ERROR:", e.toString());
+        }
+
+        try{
+            fire = new Firing(loader, shooter);
+            telemetry.addData("Sucess: ", "Firing Setup Complete");
+        }catch (Exception e) {
+            telemetry.addData("ERROR: ", "Firing Setup Failure.");
+        }
+
+        try{
+            servoo = new MekaServo(button, gate);
+            telemetry.addData("Sucess: ", "Servos Setup Complete");
+        }catch (Exception e) {
+            telemetry.addData("ERROR: ", "Servos Setup Failure.");
         }
 
         try{
@@ -69,6 +96,7 @@ public class MekaOp extends OpMode{
         /////////////Loop Methods/////////////
         //update movements
         UpdateMovementInput();
+        UpdateMiscInput();
 
         /*
         //update PID values and speeds
@@ -77,6 +105,26 @@ public class MekaOp extends OpMode{
         pidrr.encUpdate(); telemetry.addData("PID Speed: ", Float.toString(pidrr.speed));
         pidrl.encUpdate(); telemetry.addData("PID Speed: ", Float.toString(pidrl.speed));
         */
+    }
+
+    public void UpdateMiscInput() {
+        float rSticky, lSticky;
+        rSticky = gamepad2.left_stick_y;
+        lSticky = gamepad2.right_stick_y;
+        telemetry.addData("LStickY 2: ", lSticky);
+        telemetry.addData("RStickY 2: ", rSticky);
+
+        fire.SetLoadingPower(lSticky);
+        fire.SetShootingPower(rSticky);
+
+        if(joy2.b_press()){
+            servoo.ToggleGate();
+        }
+        if(joy2.left_bumper_press()){
+            servoo.ChangeButtonPosition(false);
+        }else if(joy2.left_bumper_press()){
+            servoo.ChangeButtonPosition(true);
+        }
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -120,6 +168,7 @@ public class MekaOp extends OpMode{
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
     public void setupMotors(){
+        //Drive Motors
         try {
             motfr=hardwareMap.dcMotor.get("fr");
             telemetry.addData("Confirmed: ", "Motor FR");
@@ -141,6 +190,38 @@ public class MekaOp extends OpMode{
         try {
             motrl=hardwareMap.dcMotor.get("rl");
             telemetry.addData("Confirmed: ", "Motor RL");
+        }catch (Exception e){
+            telemetry.addData("ERROR",e.toString());
+        }
+
+        //Loading/Shooting motors
+        try {
+            loader=hardwareMap.dcMotor.get("loader");
+            telemetry.addData("Confirmed: ", "Loader");
+        }catch (Exception e){
+            telemetry.addData("ERROR",e.toString());
+        }
+        try {
+            shooter=hardwareMap.dcMotor.get("shooter");
+            telemetry.addData("Confirmed: ", "Shooter");
+        }catch (Exception e){
+            telemetry.addData("ERROR",e.toString());
+        }
+    }
+
+    void setupServos(){
+        //Button Servo
+        try {
+            button = hardwareMap.servo.get("buttonServo");
+            telemetry.addData("Confirmed: ", "ButtonServo");
+        }catch (Exception e){
+            telemetry.addData("ERROR",e.toString());
+        }
+
+        //loading gate servo
+        try {
+            gate = hardwareMap.servo.get("gateServo");
+            telemetry.addData("Confirmed: ", "GateServo");
         }catch (Exception e){
             telemetry.addData("ERROR",e.toString());
         }
