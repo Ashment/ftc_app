@@ -102,7 +102,7 @@ public class  MekaDrive extends OpMode {
     public void MekaSetup(){
         //speedUpdater = new Timer("speedUpdater",true);
         //speedUpdater.scheduleAtFixedRate(new speedUpdateTask(), 0, speedUpdatePeriod);
-        motFL.setDirection(DcMotor.Direction.REVERSE);
+        motFR.setDirection(DcMotor.Direction.REVERSE);
         motBR.setDirection(DcMotor.Direction.REVERSE);
         motorPolarity = 1;
 

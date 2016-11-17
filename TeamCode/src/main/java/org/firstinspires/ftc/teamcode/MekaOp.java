@@ -85,6 +85,8 @@ public class MekaOp extends OpMode{
         }catch(Exception e){
             telemetry.addData("ERROR: ", "PIDs Initialization Failure.");
         }
+
+
     }
 
     @Override
@@ -108,22 +110,22 @@ public class MekaOp extends OpMode{
     }
 
     public void UpdateMiscInput() {
-        float rSticky, lSticky;
-        rSticky = gamepad2.left_stick_y;
-        lSticky = gamepad2.right_stick_y;
-        telemetry.addData("LStickY 2: ", lSticky);
-        telemetry.addData("RStickY 2: ", rSticky);
+        float rStickyy, lStickyy;
+        rStickyy = gamepad2.left_stick_y;
+        lStickyy = gamepad2.right_stick_y;
+        telemetry.addData("LStickY 2: ", lStickyy);
+        telemetry.addData("RStickY 2: ", rStickyy);
 
-        fire.SetLoadingPower(lSticky);
-        fire.SetShootingPower(rSticky);
+        fire.SetLoadingPower(lStickyy);
+        fire.SetShootingPower(rStickyy);
 
         if(joy2.b_press()){
             servoo.ToggleGate();
         }
         if(joy2.left_bumper_press()){
-            servoo.ChangeButtonPosition(false);
-        }else if(joy2.left_bumper_press()){
-            servoo.ChangeButtonPosition(true);
+            servoo.ChangeButtonPosition(-1);
+        }else if(joy2.right_bumper_press()){
+            servoo.ChangeButtonPosition(1);
         }
     }
 
