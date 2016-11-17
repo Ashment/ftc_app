@@ -123,7 +123,7 @@ public class CV_Nav_Test extends LinearOpMode {
          */
         VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters(R.id.cameraMonitorViewId);
         parameters.vuforiaLicenseKey = "AWdMEaX/////AAAAGcSixt1MAE+lhQaiaPlwENc5XjBb9Xa0aou/XtgVkrShYtA92ZzkrJ6/m3xZJJvr+oLFABnc/TWcuxMrGZPHCNiD1PoY4grQrDhTrHn+JhYW2jq30tH4mrjYBzDKQRuUU/fZyLgj9RUTKet0xKFd/qnEEAeRd69h6IgFDHN4l8sPWNksWEdN+oPXZZE6CNVRuClIYltYSVNFcP+KDyZYUfohhJXcwytPVxw+SsPlZ6qvgNeS55aRVyAh1ohldjfjL/XouGgolcwKgyD0/Ts6lt4mrldi5cehXVRyLaWoRYJiva0/BGCH+aeNumxMFwGYSR0NV/Fcgxaul310CAlJW/cVJVrc3kcGz6uEzsQVbt+A";
-        parameters.cameraDirection = VuforiaLocalizer.CameraDirection.BACK;
+        parameters.cameraDirection = VuforiaLocalizer.CameraDirection.FRONT;
         this.vuforia = ClassFactory.createVuforiaLocalizer(parameters);
 
         /**

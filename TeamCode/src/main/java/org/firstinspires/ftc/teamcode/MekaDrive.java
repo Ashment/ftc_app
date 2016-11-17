@@ -18,13 +18,13 @@ import java.util.TimerTask;
  * TODO
  * LEGEND: <Feature> [Completed][Tested][Interfaced]
  *
- * Motor takeover                   √--
+ * Motor takeover                   √√-
  * Exponential                      √--
  * Acceleration                     √--
- * Mechanim Movement                √--
- * TeleOpControls                   √--
+ * Mechanim Movement                √√-
+ * TeleOpControls                   √√-
  * Go by encoder                    ---
- * Getters and Setters              √--
+ * Getters and Setters              √√-
  */
 
 public class  MekaDrive extends OpMode {
