@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.Range;
@@ -29,7 +30,8 @@ public class MekaOp extends OpMode{
 
     //Basics
     DcMotor motfl,motfr,motrr,motrl, loader, shooter;
-    Servo button, gate;
+    Servo button;
+    CRServo gate;
     PID pidfl, pidfr, pidrr, pidrl;
 
     //Drivers
@@ -99,6 +101,9 @@ public class MekaOp extends OpMode{
         //update movements
         UpdateMovementInput();
         UpdateMiscInput();
+
+        telemetry.addData("GateGo State: ", servoo.getGateGo());
+        telemetry.addData("Gate Power: ", servoo.getGatePower());
 
         /*
         //update PID values and speeds
@@ -222,7 +227,7 @@ public class MekaOp extends OpMode{
 
         //loading gate servo
         try {
-            gate = hardwareMap.servo.get("gateServo");
+            gate = hardwareMap.crservo.get("gateServo");
             telemetry.addData("Confirmed: ", "GateServo");
         }catch (Exception e){
             telemetry.addData("ERROR",e.toString());

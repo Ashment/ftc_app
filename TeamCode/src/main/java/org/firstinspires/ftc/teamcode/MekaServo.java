@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import android.widget.Button;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.Range;
 
@@ -12,18 +13,20 @@ import com.qualcomm.robotcore.util.Range;
 
 public class MekaServo extends OpMode {
 
-    Servo button, gate;
-    int ButtonState = 0;
-    boolean gateGo;
+    Servo button;
+    CRServo gate;
+    private int ButtonState = 0;
+    private boolean gateGo;
 
-    double lPos = 0.08;
-    double nPos = 0.5;
-    double rPos = 0.93;
-    double tolerance = 0.05;
+    private double lPos = 0.08;
+    private double nPos = 0.5;
+    private double rPos = 0.93;
+    private double tolerance = 0.05;
+    private double gatePwr = 0.6;
     private double targetPos;
 
     //Constructor
-    public MekaServo(Servo butt, Servo gatt){
+    public MekaServo(Servo butt, CRServo gatt){
         button = butt;
         gate = gatt;
         gateGo = false;
@@ -77,9 +80,19 @@ public class MekaServo extends OpMode {
         gateGo = !gateGo;
 
         if(gateGo){
-            gate.setPosition(0.9);
+            gate.setPower(gatePwr);
         }else{
-            gate.setPosition(0.5);
+            gate.setPower(0);
         }
     }
+
+    public boolean getGateGo(){
+        return gateGo;
+    }
+
+    public double getGatePower(){
+        return gate.getPower();
+    }
+
+
 }
