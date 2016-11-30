@@ -124,8 +124,11 @@ public class MekaOp extends OpMode{
         fire.SetLoadingPower(lStickyy);
         fire.SetShootingPower(rStickyy);
 
-        if(joy2.b_press()){
-            servoo.ToggleGate();
+        //Use b button to run the gate servo
+        if(gamepad2.b){
+            servoo.ToggleGate(true);
+        }else{
+            servoo.ToggleGate(false);
         }
         if(joy2.left_bumper_press()){
             servoo.ChangeButtonPosition(-1);
