@@ -130,11 +130,23 @@ public class MekaOp extends OpMode{
         }else{
             servoo.ToggleGate(false);
         }
+
+        //Non-Toggle Button Motion
+        if(joy2.left_bumper){
+            servoo.ButtonPositionUpate(-1);
+        }else if(joy2.right_bumper){
+            servoo.ButtonPositionUpate(1);
+        }else{
+            servoo.ButtonPositionUpate(0);
+        }
+
+        /*DEPRECATED METHOD
         if(joy2.left_bumper_press()){
             servoo.ChangeButtonPosition(-1);
         }else if(joy2.right_bumper_press()){
             servoo.ChangeButtonPosition(1);
         }
+        */
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////

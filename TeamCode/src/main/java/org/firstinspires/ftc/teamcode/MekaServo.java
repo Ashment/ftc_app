@@ -44,6 +44,16 @@ public class MekaServo extends OpMode {
 
     }
 
+    public void ButtonPositionUpate(double dir){
+        if(dir > 0){
+            button.setPosition(rPos);
+        }else if(dir < 0){
+            button.setPosition(lPos);
+        }else{
+            button.setPosition(nPos);
+        }
+    }
+
     //Toggle the position of the button press servo
     public void ChangeButtonPosition(double dir){
         if(button.getPosition() < targetPos + tolerance && button.getPosition() > targetPos - tolerance) {
@@ -61,25 +71,11 @@ public class MekaServo extends OpMode {
         Range.clip(targetPos, 0, 1);
         button.setPosition(targetPos);
 
-        /*
-        if(mode && ButtonState < 1){
-            ButtonState++;
-        }else if(ButtonState > -1){
-            ButtonState--;
-        }
-
-        double temp = (ButtonState / 2) + (0.5);
-        temp = Range.clip(temp, 0.1, 0.9);
-        button.setPosition(temp);
-        */
-
     }
 
     //Toggle between spinning and not spinning
-    public void ToggleGate(boolean f){
-        gateGo = f;
-
-        if(gateGo){
+    public void ToggleGate(boolean state){
+        if(state){
             gate.setPower(gatePwr);
         }else{
             gate.setPower(0);
