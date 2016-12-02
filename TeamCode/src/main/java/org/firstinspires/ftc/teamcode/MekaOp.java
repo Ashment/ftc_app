@@ -116,13 +116,13 @@ public class MekaOp extends OpMode{
 
     public void UpdateMiscInput() {
         float rStickyy, lStickyy;
-        rStickyy = gamepad2.left_stick_y;
-        lStickyy = gamepad2.right_stick_y;
+        lStickyy = gamepad2.left_stick_y;
+        rStickyy = gamepad2.right_stick_y;
         telemetry.addData("LStickY 2: ", lStickyy);
         telemetry.addData("RStickY 2: ", rStickyy);
 
-        fire.SetLoadingPower(lStickyy);
-        fire.SetShootingPower(rStickyy);
+        fire.SetLoadingPower(rStickyy);
+        fire.SetShootingPower(lStickyy);
 
         //Use b button to run the gate servo
         if(gamepad2.b){
