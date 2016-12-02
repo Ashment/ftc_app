@@ -24,13 +24,11 @@ public class AutonomousOp extends OpMode {
     MekaServo servoo;
     Firing fire;
 
-    double timeOne = 5, fireDuration = 7, timeTwo = 13, gateDuration = 2;
+    double timeOne = 5, fireDuration = 7, timeTwo = 12.2, gateDuration = 2, timeThree = 14.5, timeFour = 22, drivingDuration = 2;
     double runTime;
 
 
-
-
-    public void setupMotors(){
+    public void SetupMotors(){
         //Drive Motors
         try {
             motfr=hardwareMap.dcMotor.get("fr");
@@ -72,7 +70,7 @@ public class AutonomousOp extends OpMode {
         }
     }
 
-    void setupServos(){
+    void SetupServos(){
         //Button Servo
         try {
             button = hardwareMap.servo.get("buttonServo");
@@ -90,12 +88,16 @@ public class AutonomousOp extends OpMode {
         }
     }
 
+    public void SetupDrivers(){
+        meka = new MekaDrive(motfl, motfr, motrr, motrl, true, true);
+    }
 
     @Override
     public void init() {
         //Hardware Setup
-        setupMotors();
-        setupServos();
+        SetupMotors();
+        SetupServos();
+        SetupDrivers();
 
         try{
             fire = new Firing(loader, shooter);
@@ -129,19 +131,26 @@ public class AutonomousOp extends OpMode {
     public void loop() {
         runTime = getRuntime();
         telemetry.addData("Run time: ", runTime);
-        if (runTime > timeOne) {
-            fire.SetShootingPower(-0.9);
-        }
-        else if (runTime > timeOne + fireDuration) {
+
+        if (runTime > timeThree + fireDuration) {
             fire.SetShootingPower(0);
+        }else if (runTime > timeThree) {
+            fire.SetShootingPower(-1);
+        }else if (runTime > timeOne + fireDuration) {
+            fire.SetShootingPower(0);
+        }else if (runTime > timeOne) {
+            fire.SetShootingPower(-1);
         }
-        if (runTime > timeTwo) {
-            servoo.ToggleGate(true);
+        if (runTime > timeTwo + gateDuration) {
+            servoo.ToggleGate(0);
+        }else if (runTime > timeTwo) {
+            servoo.ToggleGate(1);
         }
-        else if (runTime > timeTwo + gateDuration) {
-            servoo.ToggleGate(false);
+        if (runTime > timeFour + drivingDuration) {
+            meka.ZeroMotors();
+        }else if (runTime > timeFour) {
+            meka.SetRawPower(1, 1);
         }
     }
-
 
 }

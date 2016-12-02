@@ -124,11 +124,13 @@ public class MekaOp extends OpMode{
         fire.SetLoadingPower(rStickyy);
         fire.SetShootingPower(lStickyy);
 
-        //Use b button to run the gate servo
+        //Use b button to run the gate servo and y button to turn it the other way
         if(gamepad2.b){
-            servoo.ToggleGate(true);
-        }else{
-            servoo.ToggleGate(false);
+            servoo.ToggleGate(1);
+        }else if (gamepad2.y){
+            servoo.ToggleGate(-1);
+        }else {
+            servoo.ToggleGate(0);
         }
 
         //Non-Toggle Button Motion
@@ -171,10 +173,10 @@ public class MekaOp extends OpMode{
         if(Math.abs(lSticky) > meka.getInputThreshold() || Math.abs(rSticky) > meka.getInputThreshold()){
             meka.SetRawPower(lSticky, rSticky);
         }else if(joy1.left_trigger > 0){
-            meka.SetRawStrafe(joy1.left_trigger, -joy1.left_trigger);
+            meka.SetRawStrafe(-joy1.left_trigger, joy1.left_trigger);
             telemetry.addData("Strafing: ", "Left");
         }else if(joy1.right_trigger > 0){
-            meka.SetRawStrafe(-joy1.right_trigger, joy1.right_trigger);
+            meka.SetRawStrafe(joy1.right_trigger, -joy1.right_trigger);
             telemetry.addData("Strafing: ", "Right");
         }else{
             meka.ZeroMotors();

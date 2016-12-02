@@ -22,7 +22,7 @@ public class MekaServo extends OpMode {
     private double nPos = 0.5;
     private double rPos = 0.93;
     private double tolerance = 0.05;
-    private double gatePwr = 0.3;
+    private double gatePwr = 0.15;
     private double targetPos;
 
     //Constructor
@@ -74,12 +74,17 @@ public class MekaServo extends OpMode {
     }
 
     //Toggle between spinning and not spinning
-    public void ToggleGate(boolean state){
-        if(state){
+    public void ToggleGate(int state){
+        gate.setPower(gatePwr * state);
+
+        /*if(state == 0){
             gate.setPower(gatePwr);
-        }else{
+        }else if (state == 1){
             gate.setPower(0);
+        }else {
+            gate.setPower(-gatePwr);
         }
+        */
     }
 
     public boolean getGateGo(){
