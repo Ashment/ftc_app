@@ -24,7 +24,7 @@ public class AutonomousOp extends OpMode {
     MekaServo servoo;
     Firing fire;
 
-    double timeOne = 5, fireDuration = 7, timeTwo = 12.2, gateDuration = 2, timeThree = 14.5, timeFour = 22, drivingDuration = 2;
+    double timeOne = 5, fireDuration = 7, timeTwo = 12.2, gateDuration = 1.8, timeThree = 14.5, timeFour = 22, drivingDuration = 2;
     double runTime;
 
 
@@ -132,14 +132,11 @@ public class AutonomousOp extends OpMode {
         runTime = getRuntime();
         telemetry.addData("Run time: ", runTime);
 
-        if (runTime > timeThree + fireDuration) {
-            fire.SetShootingPower(0);
-        }else if (runTime > timeThree) {
+        if ((runTime > timeOne && runTime <= timeOne + fireDuration)
+                || (runTime > timeThree && runTime <= timeThree + fireDuration)) {
             fire.SetShootingPower(-1);
-        }else if (runTime > timeOne + fireDuration) {
+        }else{
             fire.SetShootingPower(0);
-        }else if (runTime > timeOne) {
-            fire.SetShootingPower(-1);
         }
         if (runTime > timeTwo + gateDuration) {
             servoo.ToggleGate(0);
