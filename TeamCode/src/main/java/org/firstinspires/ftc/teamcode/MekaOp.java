@@ -125,9 +125,9 @@ public class MekaOp extends OpMode{
         fire.SetShootingPower(lStickyy);
 
         //Use b button to run the gate servo and y button to turn it the other way
-        if(gamepad2.b){
+        if(gamepad2.dpad_up){
             servoo.ToggleGate(1);
-        }else if (gamepad2.y){
+        }else if (gamepad2.dpad_down){
             servoo.ToggleGate(-1);
         }else {
             servoo.ToggleGate(0);

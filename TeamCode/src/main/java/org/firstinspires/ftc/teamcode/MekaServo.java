@@ -18,9 +18,9 @@ public class MekaServo extends OpMode {
     private int ButtonState = 0;
     private boolean gateGo;
 
-    private double lPos = 0.08;
+    private double lPos = 0.15;
     private double nPos = 0.5;
-    private double rPos = 0.93;
+    private double rPos = 0.85;
     private double tolerance = 0.05;
     private double gatePwr = 0.15;
     private double targetPos;
