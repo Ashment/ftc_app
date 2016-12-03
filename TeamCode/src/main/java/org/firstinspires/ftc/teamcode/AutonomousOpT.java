@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -12,8 +11,8 @@ import com.qualcomm.robotcore.hardware.Servo;
  * Created by Emma on 11/30/16.
  */
 
-@Autonomous(name="Auto Testie", group="Autonomous")
-public class AutonomousOp extends OpMode {
+@Autonomous(name="Auto Testie Whim", group="Autonomous")
+public class AutonomousOpT extends OpMode {
 
     DcMotor motfl,motfr,motrr,motrl, loader, shooter;
     Servo button;
@@ -24,7 +23,7 @@ public class AutonomousOp extends OpMode {
     MekaServo servoo;
     Firing fire;
 
-    double timeOne = 5, fireDuration = 7, timeTwo = 12.2, gateDuration = 0.3, timeThree = 14.5, timeFour = 22, drivingDuration = 2, startTime;
+    double timeOne = 0, fireDuration = 7, timeTwo = 7.2, gateDuration = 0.3, timeThree = 9.5, timeFour = 17, drivingDuration = 2.1, timeFive = 20, strafeDuration = 3, startTime;
     double runTime;
 
 
@@ -140,15 +139,23 @@ public class AutonomousOp extends OpMode {
         }else{
             fire.SetShootingPower(0);
         }
+
         if (runTime > timeTwo + gateDuration) {
             servoo.ToggleGate(0);
         }else if (runTime > timeTwo) {
             servoo.ToggleGate(1);
         }
+
         if (runTime > timeFour + drivingDuration) {
             meka.ZeroMotors();
         }else if (runTime > timeFour) {
             meka.SetRawPower(1, 1);
+        }
+
+        if (runTime > timeFive + strafeDuration) {
+            meka.ZeroMotors();
+        }else if (runTime > timeFive) {
+            meka.SetRawStrafe(-1, 1);
         }
     }
 
