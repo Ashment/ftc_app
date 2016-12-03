@@ -11,8 +11,8 @@ import com.qualcomm.robotcore.hardware.Servo;
  * Created by Emma on 11/30/16.
  */
 
-@Autonomous(name="Auto Testie WhimRed", group="Autonomous")
-public class AutonomousOpT extends OpMode {
+@Autonomous(name="Auto Testie WhimBlue", group="Autonomous")
+public class AutonomousOpT2 extends OpMode {
 
     DcMotor motfl,motfr,motrr,motrl, loader, shooter;
     Servo button;
@@ -155,7 +155,7 @@ public class AutonomousOpT extends OpMode {
         if (runTime > timeFive + strafeDuration) {
             meka.ZeroMotors();
         }else if (runTime > timeFive) {
-            meka.SetRawStrafe(-1, 1);
+            meka.SetRawStrafe(1, -1);
         }
     }
 
