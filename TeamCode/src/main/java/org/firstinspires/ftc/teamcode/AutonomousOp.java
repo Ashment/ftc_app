@@ -24,7 +24,7 @@ public class AutonomousOp extends OpMode {
     MekaServo servoo;
     Firing fire;
 
-    double timeOne = 5, fireDuration = 7, timeTwo = 12.2, gateDuration = 1.8, timeThree = 14.5, timeFour = 22, drivingDuration = 2;
+    double timeOne = 5, fireDuration = 7, timeTwo = 12.2, gateDuration = 0.3, timeThree = 14.5, timeFour = 22, drivingDuration = 2;
     double runTime;
 
 
