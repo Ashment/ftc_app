@@ -24,8 +24,9 @@ public class AutonomousOp extends OpMode {
     MekaServo servoo;
     Firing fire;
 
-    double timeOne = 5, fireDuration = 7, timeTwo = 12.2, gateDuration = 0.3, timeThree = 14.5, timeFour = 22, drivingDuration = 2, startTime;
+    double timeOne = 0, fireDuration = 9, timeTwo = 1.5, gateDuration = 0.3, timeThree = 14.5, timeFour = 9, drivingDuration = 2, startTime;
     double runTime;
+    boolean isRed;
 
 
     public void SetupMotors(){
@@ -99,6 +100,8 @@ public class AutonomousOp extends OpMode {
         SetupServos();
         SetupDrivers();
 
+        telemetry.addData("Remember to position the shooting mechanism", ":)");
+
         startTime = getRuntime();
 
         try{
@@ -124,18 +127,13 @@ public class AutonomousOp extends OpMode {
         }
     }
 
-    public void localTimer(double startingTime) {
-        double localRunTime = runTime - startingTime;
-
-    }
 
     @Override
     public void loop() {
         runTime = getRuntime() - startTime;
         telemetry.addData("Run time: ", runTime + "Actual Run time: " + getRuntime());
 
-        if ((runTime > timeOne && runTime <= timeOne + fireDuration)
-                || (runTime > timeThree && runTime <= timeThree + fireDuration)) {
+        if (runTime > timeOne && runTime <= timeOne + fireDuration) {
             fire.SetShootingPower(-1);
         }else{
             fire.SetShootingPower(0);

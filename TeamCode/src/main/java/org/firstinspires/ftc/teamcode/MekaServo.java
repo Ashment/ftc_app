@@ -77,6 +77,15 @@ public class MekaServo extends OpMode {
     public void ToggleGate(int state){
         gate.setPower(gatePwr * state);
 
+        /* Will this work if you want to turn it 90° each time?
+        try {
+            Thread.sleep(300);
+        } catch(InterruptedException ex) {
+            gate.setPower(0);
+        }
+        */
+
+
         /*if(state == 0){
             gate.setPower(gatePwr);
         }else if (state == 1){

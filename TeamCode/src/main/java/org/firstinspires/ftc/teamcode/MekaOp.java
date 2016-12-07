@@ -33,6 +33,7 @@ public class MekaOp extends OpMode{
     Servo button;
     CRServo gate;
     PID pidfl, pidfr, pidrr, pidrl;
+    PikachuControl pika;
 
     //Drivers
     MekaDrive meka;
@@ -45,6 +46,8 @@ public class MekaOp extends OpMode{
         //Hardware Setup
         setupMotors();
         setupServos();
+
+        pika = new PikachuControl();
 
         //Drivers and Objects Setup
         try{
@@ -160,14 +163,14 @@ public class MekaOp extends OpMode{
         lSticky = gamepad1.left_stick_y;
         rSticky = gamepad1.right_stick_y;
 
-        telemetry.addData("LStickY: ", lSticky);
+        /*telemetry.addData("LStickY: ", lSticky);
         telemetry.addData("RStickY: ", rSticky);
         telemetry.addData("LTrigger: ", joy1.left_trigger);
         telemetry.addData("RTrigger: ", joy1.right_trigger);
         telemetry.addData("SpeedFL", meka.getSpeedFL());
         telemetry.addData("SpeedFR", meka.getSpeedFR());
         telemetry.addData("SpeedBL", meka.getSpeedBL());
-        telemetry.addData("SpeedBR", meka.getSpeedBR());
+        telemetry.addData("SpeedBR", meka.getSpeedBR());*/
 
         //Analog Movement Input
         if(Math.abs(lSticky) > meka.getInputThreshold() || Math.abs(rSticky) > meka.getInputThreshold()){
