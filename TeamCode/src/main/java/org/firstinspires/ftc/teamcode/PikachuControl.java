@@ -54,6 +54,56 @@ public class PikachuControl extends OpMode {
         return distance;
     }
 
+    public double powerGraph(int mode, double theta){
+        //Call for power of each set of wheels!
+        //Use modes to control results:
+        //  mode 1 = up right, bottom left
+        //  mode 2 = up left, bottom right
+        double graphValue = 0;
+        //Pi
+        double p = Math.PI;
+
+
+        //Angle in radians
+        double ang = Math.toRadians(theta);
+        //temporary angle (changeable)
+        double temp = ang;
+        if(mode == 1){
+            if(ang <= (p/2)){
+                //0-90
+                graphValue = 1;
+            }else if(ang <= p){
+                //90-180
+                temp -= (p/2);
+                graphValue = 1 - (temp * (4/p));
+            }else if(ang <= ((3*p)/2)){
+                //180-270
+                graphValue = -1;
+            }else{
+                //270-360
+                temp -= ((3*p/2));
+                graphValue = -1 + (temp * (4/p));
+            }
+        }else{
+            if(ang <= (p/2)){
+                //0-90
+                graphValue = -1 + (temp * (4/p));
+            }else if(ang <= p){
+                //90-180
+                graphValue = 1;
+            }else if(ang <= ((3*p)/2)){
+                //180-270
+                temp -= p;
+                graphValue = 1 - (temp * (4/p));
+            }else{
+                //270-360
+                graphValue = -1;
+            }
+        }
+
+        return graphValue;
+    }
+
     @Override
     public void init() {
 
