@@ -11,19 +11,6 @@ public class PikachuControl extends OpMode {
     double epsilon = 0.01;
     double angle = 0;
 
-    public PikachuControl(){
-
-    }
-
-    @Override
-    public void init() {
-
-    }
-
-    @Override
-    public void loop() {
-
-    }
 
     // The Quadrants go 1 for right, and 2 to 8 counterclockwise; and then 0 in the middle.
     public double rQuadrant(double x, double yy){
@@ -42,26 +29,38 @@ public class PikachuControl extends OpMode {
             }
         }
         else {
-            double angle = Math.atan2(y, x);
-            return (int) Math.ceil((angle + 22.5) /45);
+            angle = Math.toDegrees(Math.atan2(y, x));
+            return angle;
         }
         return angle;
     }
 
     public double powerFLRR (double x, double y) {
         double angle = rQuadrant(x,y);
-        double k = (Math.max(Math.abs(Math.sin(angle - 45)), Math.abs(-Math.sin(angle - 135))));
-        return Math.sin(angle - 45) * (1/k);
+        double k = (Math.max(Math.abs(Math.sin((Math.toRadians(angle - 45)))), Math.abs(-Math.sin((Math.toRadians(angle - 135))))));
+        double a = Math.sin((Math.toRadians(angle - 45))) * (1/k);
+        return a;
     }
 
-    public double powerFRBL (double x, double y) {
-        double angle = Math.atan2(x,y);
-        double k = (Math.max(Math.abs(Math.sin(angle - 45)), Math.abs(-Math.sin(angle - 135))));
-        return -Math.sin(angle - 135) * (1/k);
+    public double powerFRBL(double x, double y) {
+        double angle = rQuadrant(x,y);
+        double k = (Math.max(Math.abs(Math.sin((Math.toRadians(angle - 45)))), Math.abs(-Math.sin((Math.toRadians(angle - 135))))));
+        double b = -Math.sin((Math.toRadians(angle - 135))) * (1/k);
+        return b;
     }
 
     public double rDistance(double x, double y) {
         double distance = Math.sqrt(x * x + y * y);
         return distance;
+    }
+
+    @Override
+    public void init() {
+
+    }
+
+    @Override
+    public void loop() {
+
     }
 }
