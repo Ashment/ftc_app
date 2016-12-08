@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
+import android.location.SettingInjectorService;
+
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -19,11 +21,13 @@ public class PikaOp extends OpMode {
     private double speedFL = 0.0, speedFR = 0.0, speedBL = 0.0, speedBR = 0.0;
     private double motorPolarity = 1;
 
+    private double inputAngle;
+
     public void SetRawPower(double L, double R) {
         speedFL = Range.clip(L, -1, 1);
         speedFR = Range.clip(R, -1, 1);
-        speedBL = Range.clip(L, -1, 1);
-        speedBR = Range.clip(R, -1, 1);
+        speedBL = Range.clip(R, -1, 1);
+        speedBR = Range.clip(L, -1, 1);
         UpdateMotorPower();
     }
 
@@ -64,10 +68,13 @@ public class PikaOp extends OpMode {
 
     @Override
     public void loop() {
+        inputAngle = pika.rQuadrant(gamepad1.left_stick_x, gamepad1.left_stick_y);
         telemetry.addData("Stick: ", "Quadrant: " + pika.rQuadrant(gamepad1.left_stick_x, gamepad1.left_stick_y));
         telemetry.addData("Stick: ", "Magnitude: " + pika.rDistance(gamepad1.left_stick_x, gamepad1.left_stick_y));
         telemetry.addData("FL & RR Power: ", pika.powerFLRR(gamepad1.left_stick_x, gamepad1.left_stick_y));
         telemetry.addData("FR & RL Power: ", pika.powerFRBL(gamepad1.left_stick_x, gamepad1.left_stick_y));
+        telemetry.addData("Linearly Controlled Power: ", pika.powerGraph(2, inputAngle) + ", " + pika.powerGraph(1, inputAngle));
+        telemetry.addData("Angle: ", (inputAngle) + ", " + Math.toRadians(inputAngle));
         UpdateMovementInput();
         UpdateMotorPower();
     }
@@ -75,18 +82,11 @@ public class PikaOp extends OpMode {
 
     public void UpdateMovementInput() {
 
-        /*telemetry.addData("LStickY: ", lSticky);
-        telemetry.addData("RStickY: ", rSticky);
-        telemetry.addData("LTrigger: ", joy1.left_trigger);
-        telemetry.addData("RTrigger: ", joy1.right_trigger);
-        telemetry.addData("SpeedFL", meka.getSpeedFL());
-        telemetry.addData("SpeedFR", meka.getSpeedFR());
-        telemetry.addData("SpeedBL", meka.getSpeedBL());
-        telemetry.addData("SpeedBR", meka.getSpeedBR());*/
+        //The first one is not linear, the second one is linear.
 
-        //Analog Movement Input
-        SetRawPower(pika.powerFLRR(gamepad1.left_stick_x, gamepad1.left_stick_y) * pika.rDistance(gamepad1.left_stick_x, gamepad1.left_stick_y),
-                pika.powerFRBL(gamepad1.left_stick_x, gamepad1.left_stick_y) * pika.rDistance(gamepad1.left_stick_x, gamepad1.left_stick_y));
+        /*SetRawPower(pika.powerFLRR(gamepad1.left_stick_x, gamepad1.left_stick_y) * pika.rDistance(gamepad1.left_stick_x, gamepad1.left_stick_y),
+                pika.powerFRBL(gamepad1.left_stick_x, gamepad1.left_stick_y) * pika.rDistance(gamepad1.left_stick_x, gamepad1.left_stick_y));*/
+        SetRawPower(pika.powerGraph(2, inputAngle)* pika.rDistance(gamepad1.left_stick_x, gamepad1.left_stick_y) , pika.powerGraph(1, inputAngle)* pika.rDistance(gamepad1.left_stick_x, gamepad1.left_stick_y));
     }
 
 

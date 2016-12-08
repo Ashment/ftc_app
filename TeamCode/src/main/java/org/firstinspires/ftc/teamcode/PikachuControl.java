@@ -9,6 +9,8 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 public class PikachuControl extends OpMode {
 
     double epsilon = 0.01;
+
+    // angle will be in degrees
     double angle = 0;
 
 
@@ -62,6 +64,10 @@ public class PikachuControl extends OpMode {
         double graphValue = 0;
         //Pi
         double p = Math.PI;
+
+        if (theta < 0) {
+            theta += 360;
+        }
 
 
         //Angle in radians
