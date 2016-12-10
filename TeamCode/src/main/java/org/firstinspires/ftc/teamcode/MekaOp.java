@@ -30,8 +30,7 @@ public class MekaOp extends OpMode{
 
     //Basics
     DcMotor motfl,motfr,motrr,motrl, loader, shooter;
-    Servo button;
-    CRServo gate;
+    CRServo gate, button;
     PID pidfl, pidfr, pidrr, pidrl;
     PikachuControl pika;
 
@@ -107,6 +106,7 @@ public class MekaOp extends OpMode{
 
         telemetry.addData("GateGo State: ", servoo.getGateGo());
         telemetry.addData("Gate Power: ", servoo.getGatePower());
+        telemetry.addData("Button Power: ", servoo.getButtonPwr());
 
         /*
         //update PID values and speeds
@@ -136,13 +136,13 @@ public class MekaOp extends OpMode{
             servoo.ToggleGate(0);
         }
 
+        if (joy2.right_bumper){
+            servoo.turnGate();
+        }
+
         //Non-Toggle Button Motion
         if(joy2.left_bumper){
-            servoo.ButtonPositionUpate(-1);
-        }else if(joy2.right_bumper){
-            servoo.ButtonPositionUpate(1);
-        }else{
-            servoo.ButtonPositionUpate(0);
+            servoo.pressButton();
         }
 
         /*DEPRECATED METHOD
@@ -239,7 +239,7 @@ public class MekaOp extends OpMode{
     void setupServos(){
         //Button Servo
         try {
-            button = hardwareMap.servo.get("buttonServo");
+            button = hardwareMap.crservo.get("buttonServo");
             telemetry.addData("Confirmed: ", "ButtonServo");
         }catch (Exception e){
             telemetry.addData("ERROR",e.toString());

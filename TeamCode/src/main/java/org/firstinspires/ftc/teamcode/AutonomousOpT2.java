@@ -15,8 +15,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 public class AutonomousOpT2 extends OpMode {
 
     DcMotor motfl,motfr,motrr,motrl, loader, shooter;
-    Servo button;
-    CRServo gate;
+    CRServo gate, button;
 
     //Drivers
     MekaDrive meka;
@@ -72,7 +71,7 @@ public class AutonomousOpT2 extends OpMode {
     void SetupServos(){
         //Button Servo
         try {
-            button = hardwareMap.servo.get("buttonServo");
+            button = hardwareMap.crservo.get("buttonServo");
             telemetry.addData("Confirmed: ", "ButtonServo");
         }catch (Exception e){
             telemetry.addData("ERROR",e.toString());
