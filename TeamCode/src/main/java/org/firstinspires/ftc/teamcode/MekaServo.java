@@ -19,12 +19,8 @@ public class MekaServo extends OpMode {
     CRServo button, gate;
     protected boolean gateGo;
 
-    private double buttonPwr = 0.5;
-    private double gatePwr = 0.15;
-
-    //In milliseconds
-    private long gateTime = 300;
-    private long buttonTime = 1000;
+    protected double buttonPwr = 0.5;
+    protected double gatePwr = 0.15;
 
     //Constructor
     public MekaServo(CRServo butt, CRServo gatt){
@@ -56,7 +52,7 @@ public class MekaServo extends OpMode {
             public void run() {
                 button.setPower(0);
             }
-        }, buttonTime);
+        }, 1000);
     }
 
     public void turnGate() {
@@ -66,7 +62,7 @@ public class MekaServo extends OpMode {
             public void run() {
                 gate.setPower(0);
             }
-        }, gateTime);
+        }, 300);
     }
 
     //Toggle between spinning and not spinning
