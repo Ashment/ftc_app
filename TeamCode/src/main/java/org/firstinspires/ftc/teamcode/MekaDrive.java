@@ -127,8 +127,8 @@ public class  MekaDrive extends OpMode {
     public void SetRawPower(double L, double R){
         speedFL=Range.clip(L, -1, 1);
         speedFR=Range.clip(R, -1, 1);
-        speedBL=Range.clip(L, -1, 1);
-        speedBR=Range.clip(R, -1, 1);
+        speedBL=Range.clip(R, -1, 1);
+        speedBR=Range.clip(L, -1, 1);
         UpdateMotorPower();
     }
 

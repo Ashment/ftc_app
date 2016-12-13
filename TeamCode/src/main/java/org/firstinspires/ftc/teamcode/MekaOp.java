@@ -107,7 +107,6 @@ public class MekaOp extends OpMode{
         telemetry.addData("GateGo State: ", servoo.getGateGo());
         telemetry.addData("Gate Power: ", servoo.getGatePower());
         telemetry.addData("Button Power: ", servoo.getButtonPwr());
-
         /*
         //update PID values and speeds
         pidfl.encUpdate(); telemetry.addData("PID Speed: ", Float.toString(pidfl.speed));
@@ -163,6 +162,9 @@ public class MekaOp extends OpMode{
         lSticky = gamepad1.left_stick_y;
         rSticky = gamepad1.right_stick_y;
 
+        double inputAngle = pika.rQuadrant(gamepad1.left_stick_x, gamepad1.left_stick_y);
+
+
         /*telemetry.addData("LStickY: ", lSticky);
         telemetry.addData("RStickY: ", rSticky);
         telemetry.addData("LTrigger: ", joy1.left_trigger);
@@ -173,7 +175,7 @@ public class MekaOp extends OpMode{
         telemetry.addData("SpeedBR", meka.getSpeedBR());*/
 
         //Analog Movement Input
-        if(Math.abs(lSticky) > meka.getInputThreshold() || Math.abs(rSticky) > meka.getInputThreshold()){
+        /*if(Math.abs(lSticky) > meka.getInputThreshold() || Math.abs(rSticky) > meka.getInputThreshold()){
             meka.SetRawPower(lSticky, rSticky);
         }else if(joy1.left_trigger > 0){
             meka.SetRawStrafe(-joy1.left_trigger, joy1.left_trigger);
@@ -183,11 +185,20 @@ public class MekaOp extends OpMode{
             telemetry.addData("Strafing: ", "Right");
         }else{
             meka.ZeroMotors();
-        }
+        }*/
 
         if(joy1.right_stick_button_press()){
             meka.setMotorPolarity(meka.getMotorPolarity() * -1);
         }
+
+        meka.SetRawPower(pika.powerGraph(2, inputAngle)* pika.rDistance(gamepad1.left_stick_x, gamepad1.left_stick_y),
+                pika.powerGraph(1, inputAngle)* pika.rDistance(gamepad1.left_stick_x, gamepad1.left_stick_y));
+
+        telemetry.addData("Linearly Controlled Power: ", pika.powerGraph(2, inputAngle) + ", " + pika.powerGraph(1, inputAngle));
+        telemetry.addData("Angle: ", (inputAngle) + ", " + Math.toRadians(inputAngle));
+        telemetry.addData("FLBR: ", meka.getSpeedFL());
+        telemetry.addData("FRBL: ", meka.getSpeedFR());
+
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -235,6 +246,7 @@ public class MekaOp extends OpMode{
             telemetry.addData("ERROR",e.toString());
         }
     }
+
 
     void setupServos(){
         //Button Servo
