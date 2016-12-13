@@ -24,7 +24,9 @@ public class MekaServo extends OpMode {
 
     //In milliseconds
     private long gateTime = 300;
-    private long buttonTime = 1000;
+    private long buttonTime = 1500;
+
+    Timer timer = new Timer();
 
     //Constructor
     public MekaServo(CRServo butt, CRServo gatt){
@@ -45,22 +47,20 @@ public class MekaServo extends OpMode {
     }
 
     public void pressButton() {
-        Timer timer = new Timer();
         button.setPower(buttonPwr);
         timer.schedule(new TimerTask() {
             public void run() {
                 button.setPower(-buttonPwr);
             }
-        }, 1000);
+        }, buttonTime);
         timer.schedule(new TimerTask() {
             public void run() {
                 button.setPower(0);
             }
-        }, buttonTime);
+        }, 2*buttonTime);
     }
 
     public void turnGate() {
-        Timer timer = new Timer();
         gate.setPower(gatePwr);
         timer.schedule(new TimerTask() {
             public void run() {
