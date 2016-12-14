@@ -174,25 +174,23 @@ public class MekaOp extends OpMode{
         telemetry.addData("SpeedBL", meka.getSpeedBL());
         telemetry.addData("SpeedBR", meka.getSpeedBR());*/
 
-        //Analog Movement Input
-        /*if(Math.abs(lSticky) > meka.getInputThreshold() || Math.abs(rSticky) > meka.getInputThreshold()){
-            meka.SetRawPower(lSticky, rSticky);
-        }else if(joy1.left_trigger > 0){
-            meka.SetRawStrafe(-joy1.left_trigger, joy1.left_trigger);
-            telemetry.addData("Strafing: ", "Left");
-        }else if(joy1.right_trigger > 0){
-            meka.SetRawStrafe(joy1.right_trigger, -joy1.right_trigger);
-            telemetry.addData("Strafing: ", "Right");
-        }else{
-            meka.ZeroMotors();
-        }*/
-
         if(joy1.right_stick_button_press()){
             meka.setMotorPolarity(meka.getMotorPolarity() * -1);
         }
 
-        meka.SetRawPower(pika.powerGraph(2, inputAngle)* pika.rDistance(gamepad1.left_stick_x, gamepad1.left_stick_y),
-                pika.powerGraph(1, inputAngle)* pika.rDistance(gamepad1.left_stick_x, gamepad1.left_stick_y));
+        //Analog Movement Input
+        if(joy1.left_trigger > 0){
+            meka.SetRawPower(-1, 1);
+            telemetry.addData("Turning: ", "Left" + joy1.left_trigger);
+        }else if(joy1.right_trigger > 0){
+            meka.SetRawPower(1, -1);
+            telemetry.addData("Turing: ", "Right " + joy1.right_trigger);
+        }else if(Math.abs(joy1.left_stick_x) > 0 || Math.abs(joy1.left_stick_y) > 0){
+            meka.SetRawStrafe(pika.powerGraph(2, inputAngle)* pika.rDistance(gamepad1.left_stick_x, gamepad1.left_stick_y),
+                    pika.powerGraph(1, inputAngle)* pika.rDistance(gamepad1.left_stick_x, gamepad1.left_stick_y));
+        }else{
+            meka.ZeroMotors();
+        }
 
         telemetry.addData("Linearly Controlled Power: ", pika.powerGraph(2, inputAngle) + ", " + pika.powerGraph(1, inputAngle));
         telemetry.addData("Angle: ", (inputAngle) + ", " + Math.toRadians(inputAngle));
