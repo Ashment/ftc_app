@@ -89,11 +89,12 @@ public class BeaconAuto extends OpMode {
 
         telemetry.addData("State: ", currentState.name());
 
+
+        //STATES
         switch (currentState) {
             case DRIVE_FOURTY_FIVE:
                 try{
-                    meka.SetRawStrafe(pika.powerGraph(2, (Math.PI / 4)),
-                            pika.powerGraph(1,  (Math.PI / 4)));
+                    meka.SetRawStrafe(0, 1);
                 }catch(Exception e){
                     telemetry.addData("DRIVEFORTYFIVE: ", e.toString());
                 }
