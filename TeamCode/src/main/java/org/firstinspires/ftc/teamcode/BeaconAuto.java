@@ -44,6 +44,8 @@ public class BeaconAuto extends OpMode {
         SetupMotors();
         SetupServos();
 
+        pika = new PikachuControl();
+                                                    
         try{
             servoo = new MekaServo(button, gate);
             telemetry.addData("Sucess: ", "Servos Setup Complete");
