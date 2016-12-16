@@ -7,6 +7,9 @@ import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 
 /**
  * Created by Emma on 11/30/16.
@@ -23,10 +26,12 @@ public class AutonomousOp extends OpMode {
     MekaServo servoo;
     Firing fire;
 
-    double timeOne = 0, fireDuration = 9, timeTwo = 1.5, gateDuration = 0.3, timeThree = 14.5, timeFour = 9, drivingDuration = 2, startTime;
+    double timeOne = 0, fireDuration = 9, timeTwo = 1.5, gateDuration = 0.3, timeThree = 14.5, timeFour = 9, drivingDuration = 2;
+    double startTime, localStartTime;
     double runTime;
     boolean isRed;
 
+    Timer timer = new Timer();
 
     public void SetupMotors(){
         //Drive Motors
@@ -131,7 +136,6 @@ public class AutonomousOp extends OpMode {
     public void loop() {
         runTime = getRuntime() - startTime;
         telemetry.addData("Run time: ", runTime + "Actual Run time: " + getRuntime());
-
         if (runTime > timeOne && runTime <= timeOne + fireDuration) {
             fire.SetShootingPower(-1);
         }else{
