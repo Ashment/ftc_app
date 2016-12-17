@@ -151,11 +151,6 @@ public class AutonomousOpT2 extends OpMode {
             meka.SetRawPower(1, 1);
         }
 
-        if (runTime > timeFive + strafeDuration) {
-            meka.ZeroMotors();
-        }else if (runTime > timeFive) {
-            meka.SetRawStrafe(1, -1);
-        }
     }
 
 }
