@@ -29,14 +29,16 @@ public class MekaOp extends OpMode{
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
     //Basics
-    DcMotor motfl,motfr,motrr,motrl, loader, shooter;
-    CRServo gate, button;
+    //loader and button are not used
+    DcMotor motfl,motfr,motrr,motrl, shooter, motorLeft, motorRight;
+    CRServo gate, button, servoLeft, servoRight;
     PID pidfl, pidfr, pidrr, pidrl;
     PikachuControl pika;
 
     //Drivers
     MekaDrive meka;
     MekaServo servoo;
+    CapballDriver cap;
     Firing fire;
     ButtonState joy1, joy2;
 
@@ -57,7 +59,14 @@ public class MekaOp extends OpMode{
         }
 
         try{
-            fire = new Firing(loader, shooter);
+            cap = new CapballDriver(servoLeft, servoRight, motorLeft, motorRight);
+            telemetry.addData("Sucess: ", "CapballDriver Setup Complete");
+        }catch (Exception e) {
+            telemetry.addData("ERROR: ", "CapballDriver Setup Failure.");
+        }
+
+        try{
+            fire = new Firing(shooter);
             telemetry.addData("Sucess: ", "Firing Setup Complete");
         }catch (Exception e) {
             telemetry.addData("ERROR: ", "Firing Setup Failure.");
@@ -117,14 +126,13 @@ public class MekaOp extends OpMode{
     }
 
     public void UpdateMiscInput() {
-        float rStickyy, lStickyy;
+
+        //LStickY 2 (moved up and down) controls
+        float lStickyy, rStickyy;
         lStickyy = gamepad2.left_stick_y;
         rStickyy = gamepad2.right_stick_y;
         telemetry.addData("LStickY 2: ", lStickyy);
         telemetry.addData("RStickY 2: ", rStickyy);
-
-        fire.SetLoadingPower(rStickyy);
-        fire.SetShootingPower(lStickyy);
 
         //Use b button to run the gate servo and y button to turn it the other way
         if(gamepad2.dpad_up){
@@ -144,6 +152,10 @@ public class MekaOp extends OpMode{
             servoo.pressButton();
         }
 
+        cap.extendArm(lStickyy);
+        cap.raiseArm(rStickyy);
+
+
         /*DEPRECATED METHOD
         if(joy2.left_bumper_press()){
             servoo.ChangeButtonPosition(-1);
@@ -158,12 +170,8 @@ public class MekaOp extends OpMode{
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
     public void UpdateMovementInput(){
-        float lSticky, rSticky;
-        lSticky = gamepad1.left_stick_y;
-        rSticky = gamepad1.right_stick_y;
 
         double inputAngle = pika.rQuadrant(gamepad1.left_stick_x, gamepad1.left_stick_y);
-
 
         /*telemetry.addData("LStickY: ", lSticky);
         telemetry.addData("RStickY: ", rSticky);
@@ -184,7 +192,7 @@ public class MekaOp extends OpMode{
             telemetry.addData("Turning: ", "Left" + joy1.left_trigger);
         }else if(joy1.right_trigger > 0){
             meka.SetRawPower(1, -1);
-            telemetry.addData("Turing: ", "Right " + joy1.right_trigger);
+            telemetry.addData("Turning: ", "Right " + joy1.right_trigger);
         }else if(Math.abs(joy1.left_stick_x) > 0 || Math.abs(joy1.left_stick_y) > 0){
             meka.SetRawStrafe(pika.powerGraph(2, inputAngle)* pika.rDistance(gamepad1.left_stick_x, gamepad1.left_stick_y),
                     pika.powerGraph(1, inputAngle)* pika.rDistance(gamepad1.left_stick_x, gamepad1.left_stick_y));
@@ -230,19 +238,29 @@ public class MekaOp extends OpMode{
             telemetry.addData("ERROR",e.toString());
         }
 
-        //Loading/Shooting motors
-        try {
-            loader=hardwareMap.dcMotor.get("loader");
-            telemetry.addData("Confirmed: ", "Loader");
-        }catch (Exception e){
-            telemetry.addData("ERROR",e.toString());
-        }
+        //Shooting motors
         try {
             shooter=hardwareMap.dcMotor.get("shooter");
             telemetry.addData("Confirmed: ", "Shooter");
         }catch (Exception e){
             telemetry.addData("ERROR",e.toString());
         }
+
+        //CapBall motors
+        try {
+            motorLeft=hardwareMap.dcMotor.get("motL");
+            telemetry.addData("Confirmed: ", "motL");
+        }catch (Exception e){
+            telemetry.addData("ERROR",e.toString());
+        }
+
+        try {
+            motorRight=hardwareMap.dcMotor.get("motR");
+            telemetry.addData("Confirmed: ", "motR");
+        }catch (Exception e){
+            telemetry.addData("ERROR",e.toString());
+        }
+
     }
 
 
@@ -259,6 +277,20 @@ public class MekaOp extends OpMode{
         try {
             gate = hardwareMap.crservo.get("gateServo");
             telemetry.addData("Confirmed: ", "GateServo");
+        }catch (Exception e){
+            telemetry.addData("ERROR",e.toString());
+        }
+
+        try {
+            servoLeft=hardwareMap.crservo.get("servoL");
+            telemetry.addData("Confirmed: ", "servoL");
+        }catch (Exception e){
+            telemetry.addData("ERROR",e.toString());
+        }
+
+        try {
+            servoRight=hardwareMap.crservo.get("servoR");
+            telemetry.addData("Confirmed: ", "servoR");
         }catch (Exception e){
             telemetry.addData("ERROR",e.toString());
         }

@@ -10,11 +10,10 @@ import com.qualcomm.robotcore.util.Range;
 
 public class Firing extends OpMode {
 
-    DcMotor loader, shooter;
+    DcMotor shooter;
 
     //Constructor
-    public Firing(DcMotor load, DcMotor shoot) {
-        loader = load;
+    public Firing(DcMotor shoot) {
         shooter = shoot;
     }
 
@@ -29,11 +28,6 @@ public class Firing extends OpMode {
     }
 
     //Set Motor Powers
-    public void SetLoadingPower(double power){
-        double p = Range.clip(power, -1, 1);
-        loader.setPower(p);
-    }
-
     public void SetShootingPower(double power){
         double p = Range.clip(power, -1, 1);
         shooter.setPower(p);
