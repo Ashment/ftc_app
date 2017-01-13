@@ -109,7 +109,7 @@ public class AutonomousOp extends OpMode {
         startTime = getRuntime();
 
         try{
-            fire = new Firing(loader, shooter);
+            fire = new Firing(shooter);
             telemetry.addData("Sucess: ", "Firing Setup Complete");
         }catch (Exception e) {
             telemetry.addData("ERROR: ", "Firing Setup Failure.");
