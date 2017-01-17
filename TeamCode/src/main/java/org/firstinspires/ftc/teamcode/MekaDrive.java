@@ -175,6 +175,15 @@ public class  MekaDrive extends OpMode {
         speedBL = 0;
         speedBR = 0;
 
+        motBL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        motBR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        motFL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        motFR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        motBL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        motBR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        motFL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        motFR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
         UpdateMotorPower();
     }
 

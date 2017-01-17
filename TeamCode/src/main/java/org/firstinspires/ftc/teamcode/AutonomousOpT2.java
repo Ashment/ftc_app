@@ -22,7 +22,7 @@ public class AutonomousOpT2 extends OpMode {
     MekaServo servoo;
     Firing fire;
 
-    double timeOne = 0, fireDuration = 7, timeTwo = 7.2, gateDuration = 0.3, timeThree = 9.5, timeFour = 17, drivingDuration = 2.1, timeFive = 20, strafeDuration = 3, startTime;
+    double timeOne = 0, fireDuration = 7, timeTwo = 7.2, gateDuration = 0.3, timeThree = 9.5, timeFour = 17, drivingDuration = 2.4, timeFive = 20, strafeDuration = 3, startTime;
     double runTime;
 
 
@@ -151,6 +151,14 @@ public class AutonomousOpT2 extends OpMode {
             meka.SetRawPower(1, 1);
         }
 
+<<<<<<< Updated upstream
+=======
+        /*if (runTime > timeFive + strafeDuration) {
+            meka.ZeroMotors();
+        }else if (runTime > timeFive) {
+            meka.SetRawStrafe(1, -1);
+        }*/
+>>>>>>> Stashed changes
     }
 
 }

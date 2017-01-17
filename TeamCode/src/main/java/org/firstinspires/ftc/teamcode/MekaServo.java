@@ -24,7 +24,7 @@ public class MekaServo extends OpMode {
 
     //In milliseconds
     private long gateTime = 300;
-    private long buttonTime = 1500;
+    private long buttonTime = 1400;
 
     Timer timer = new Timer();
 
@@ -94,6 +94,8 @@ public class MekaServo extends OpMode {
     public double getButtonPwr() {
         return button.getPower();
     }
+
+    public double getButtonTime() { return buttonTime; }
 
 
 }
