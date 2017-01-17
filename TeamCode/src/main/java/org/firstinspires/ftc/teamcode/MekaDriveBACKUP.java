@@ -1,14 +1,11 @@
 package org.firstinspires.ftc.teamcode;
 
-import android.graphics.Path;
-
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.DcMotorController;
 import com.qualcomm.robotcore.util.Range;
 
 import java.util.Timer;
-import java.util.TimerTask;
 
 /**
  * Created by Ashment on 10/13/16.
@@ -27,7 +24,7 @@ import java.util.TimerTask;
  * Getters and Setters              √√-
  */
 
-public class  MekaDrive extends OpMode {
+public class MekaDriveBACKUP extends OpMode {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////// DEFAULT SETTINGS /////////////////////////////////////////
@@ -76,7 +73,7 @@ public class  MekaDrive extends OpMode {
 
     }
 
-    public MekaDrive(DcMotor mot1, DcMotor mot2, DcMotor mot3, DcMotor mot4, boolean useEncoders, boolean isAutonomous) {
+    public MekaDriveBACKUP(DcMotor mot1, DcMotor mot2, DcMotor mot3, DcMotor mot4, boolean useEncoders, boolean isAutonomous) {
         motFL = mot1;
         motFR = mot2;
         motBR = mot3;
