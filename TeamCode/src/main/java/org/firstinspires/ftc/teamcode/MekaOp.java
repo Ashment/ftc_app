@@ -12,7 +12,7 @@ import java.util.TimerTask;
 /**
  * Created by Ashment on 10/17/16.
  */
-
+/*
 @TeleOp (name="MekaOp", group="Test")
 public class MekaOp extends OpMode{
 
@@ -25,7 +25,7 @@ public class MekaOp extends OpMode{
     /*
     Motors: fl, fr, rl, rr, loader, shooter
     Servos: buttonServo, gateServo
-    */
+//
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
     //Basics
@@ -122,7 +122,7 @@ public class MekaOp extends OpMode{
         pidfr.encUpdate(); telemetry.addData("PID Speed: ", Float.toString(pidfr.speed));
         pidrr.encUpdate(); telemetry.addData("PID Speed: ", Float.toString(pidrr.speed));
         pidrl.encUpdate(); telemetry.addData("PID Speed: ", Float.toString(pidrl.speed));
-        */
+//
     }
 
     public void UpdateMiscInput() {
@@ -162,7 +162,7 @@ public class MekaOp extends OpMode{
         }else if(joy2.right_bumper_press()){
             servoo.ChangeButtonPosition(1);
         }
-        */
+//
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -180,7 +180,8 @@ public class MekaOp extends OpMode{
         telemetry.addData("SpeedFL", meka.getSpeedFL());
         telemetry.addData("SpeedFR", meka.getSpeedFR());
         telemetry.addData("SpeedBL", meka.getSpeedBL());
-        telemetry.addData("SpeedBR", meka.getSpeedBR());*/
+        telemetry.addData("SpeedBR", meka.getSpeedBR());
+ //
 
         if(joy1.right_stick_button_press()){
             meka.setMotorPolarity(meka.getMotorPolarity() * -1);
@@ -307,6 +308,7 @@ public class MekaOp extends OpMode{
         public void run() {
 
         }
-    }*/
+//    }
 
 }
+*/

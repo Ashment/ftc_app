@@ -15,7 +15,7 @@ import com.qualcomm.robotcore.robocol.TelemetryMessage;
 /**
  * Created by Emma on 12/15/16.
  */
-
+/*
 @Autonomous(name="Beacon Auto", group="Autonomous")
 public class BeaconAuto extends OpMode {
     enum states{DRIVE_FOURTY_FIVE,CHASE_BEACON,CHECK_COLOR,FOLLOW_BUTTON,PRESS_BUTTON,WAIT,BUMP}
@@ -263,3 +263,4 @@ public class BeaconAuto extends OpMode {
     }
 
 }
+*/

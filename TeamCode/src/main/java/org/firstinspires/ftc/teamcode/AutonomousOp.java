@@ -15,6 +15,8 @@ import java.util.TimerTask;
  * Created by Emma on 11/30/16.
  */
 
+
+/*
 @Autonomous(name="Auto Testie", group="Autonomous")
 public class AutonomousOp extends OpMode {
 
@@ -154,3 +156,4 @@ public class AutonomousOp extends OpMode {
     }
 
 }
+*/

@@ -16,13 +16,40 @@ public class PixyCamDriver extends OpMode {
 
     private I2cDevice cam;
     private byte[] data;
+    private short[] shortData;
 
     public PixyCamDriver() {
         cam.enableI2cReadMode(new I2cAddr(0x54), 0, 14);
         cam.getI2cReadCache();
+    }
+
+    public byte[] getData() {
+
+        cam.enableI2cReadMode(new I2cAddr(0x54), 0, 14);
+        cam.getI2cReadCache();
+        cam.getI2cReadCacheLock();
+        data = cam.getCopyOfReadBuffer();
+        return data;
 
     }
 
+    public short mergeBytes(byte b1, byte b2) {
+        return (short) ((b1 << 8) | (b2 & 0xFF));
+    }
+
+    public short[] byteToShort(byte[] original) {
+        int k = original.length;
+        short[] result;
+        if (k % 2 != 0) {
+            telemetry.addData("??", original.length);
+            k = k-1;
+        }
+        result = new short[k/2];
+        for (int i = 0; i < k/2; i++) {
+            result[i] = mergeBytes(original[2*i + 1], original[2*i]);
+        }
+        return result;
+    }
 
     @Override
     public void init() {
@@ -34,13 +61,26 @@ public class PixyCamDriver extends OpMode {
             telemetry.addData("ERROR",e.toString());
         }
 
-        PixyCamDriver namesss= new PixyCamDriver();
-
     }
 
     @Override
     public void loop() {
-        cam.getI2cReadCacheLock();
-        data = cam.getCopyOfReadBuffer();
+        getData();
+        shortData = byteToShort(data);
+        telemetry.addData("length of array: ", data.length);
+        telemetry.addData("array: ", data[0] + " " + data[1] + " " + data[2] + " "+ data[3]
+                + " " + data[4] + " " + data[5] + " ");
+        telemetry.addData("array: ", shortData[0] + " " + shortData[1] + " " + shortData[2] + " "+ shortData[3]
+                + " " + shortData[4] + " " + shortData[5] + " ");
+    }
+
+
+    public String DataHexString(short[] byteInput){
+        String returnString = "Data Array: ";
+        for(int i=0; i<byteInput.length; i++){
+            String inHexString = Integer.toHexString(byteInput[i] & 0xFF);
+            returnString = returnString + " " + inHexString;
+        }
+        return returnString;
     }
 }

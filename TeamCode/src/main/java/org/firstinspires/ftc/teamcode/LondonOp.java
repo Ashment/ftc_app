@@ -22,7 +22,7 @@ public class LondonOp extends OpMode{
 
     //Basics
     DcMotor motfl,motfr,motrr,motrl;
-    PID pidfl, pidfr, pidrr, pidrl;
+    //PID pidfl, pidfr, pidrr, pidrl;
 
     //Drivers
     LondonDrive london;
