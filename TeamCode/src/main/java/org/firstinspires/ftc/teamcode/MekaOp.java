@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorController;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.Range;
 
@@ -12,7 +13,7 @@ import java.util.TimerTask;
 /**
  * Created by Ashment on 10/17/16.
  */
-/*
+
 @TeleOp (name="MekaOp", group="Test")
 public class MekaOp extends OpMode{
 
@@ -25,18 +26,18 @@ public class MekaOp extends OpMode{
     /*
     Motors: fl, fr, rl, rr, loader, shooter
     Servos: buttonServo, gateServo
-//
+    */
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
     //Basics
     //loader and button are not used
+    DcMotorController lCont, rCont;
     DcMotor motfl,motfr,motrr,motrl, shooter, motorLeft, motorRight;
     CRServo gate, button, servoLeft, servoRight;
-    PID pidfl, pidfr, pidrr, pidrl;
     PikachuControl pika;
 
     //Drivers
-    MekaDrive meka;
+    MekaDriveN meka;
     MekaServo servoo;
     CapballDriver cap;
     Firing fire;
@@ -56,6 +57,12 @@ public class MekaOp extends OpMode{
             joy2 = new ButtonState();
         }catch (Exception e){
             telemetry.addData("ERROR:", e.toString());
+        }
+        try {
+            lCont = hardwareMap.dcMotorController.get("leftDriveController");
+            rCont = hardwareMap.dcMotorController.get("rightDriveController");
+        }catch(Exception e){
+            telemetry.addData("ERROR: ", "LEGACY MODULE setup failure");
         }
 
         try{
@@ -80,23 +87,11 @@ public class MekaOp extends OpMode{
         }
 
         try{
-            meka = new MekaDrive(motfl, motfr, motrr, motrl, true, false);
+            meka = new MekaDriveN(lCont, rCont, true, false);
             meka.setEnableExpo(false);
             telemetry.addData("Sucess: ", "MekaDrive Setup Complete.");
         }catch (Exception e){
             telemetry.addData("ERROR: ", "MekaDrive Setup Failure.");
-        }
-
-        try{
-            //create a PID for each motfl
-            pidfl = new PID(motfl, this);
-            pidfr = new PID(motfr, this);
-            pidrr = new PID(motrr, this);
-            pidrl = new PID(motrl, this);
-
-            telemetry.addData("Success: ", "PID Initialization Complete.");
-        }catch(Exception e){
-            telemetry.addData("ERROR: ", "PIDs Initialization Failure.");
         }
 
 
@@ -122,7 +117,7 @@ public class MekaOp extends OpMode{
         pidfr.encUpdate(); telemetry.addData("PID Speed: ", Float.toString(pidfr.speed));
         pidrr.encUpdate(); telemetry.addData("PID Speed: ", Float.toString(pidrr.speed));
         pidrl.encUpdate(); telemetry.addData("PID Speed: ", Float.toString(pidrl.speed));
-//
+        */
     }
 
     public void UpdateMiscInput() {
@@ -162,7 +157,7 @@ public class MekaOp extends OpMode{
         }else if(joy2.right_bumper_press()){
             servoo.ChangeButtonPosition(1);
         }
-//
+        */
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -181,7 +176,7 @@ public class MekaOp extends OpMode{
         telemetry.addData("SpeedFR", meka.getSpeedFR());
         telemetry.addData("SpeedBL", meka.getSpeedBL());
         telemetry.addData("SpeedBR", meka.getSpeedBR());
- //
+        */
 
         if(joy1.right_stick_button_press()){
             meka.setMotorPolarity(meka.getMotorPolarity() * -1);
@@ -297,10 +292,6 @@ public class MekaOp extends OpMode{
         }
     }
 
-    public void AddTelemetry(String xx, String yy){
-        telemetry.addData(xx, yy);
-    }
-
 
     /*
     private class speedUpdateTask extends TimerTask {
@@ -308,7 +299,7 @@ public class MekaOp extends OpMode{
         public void run() {
 
         }
-//    }
+    }
+    */
 
 }
-*/
