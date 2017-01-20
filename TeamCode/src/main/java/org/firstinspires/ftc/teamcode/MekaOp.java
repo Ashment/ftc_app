@@ -37,7 +37,7 @@ public class MekaOp extends OpMode{
     PikachuControl pika;
 
     //Drivers
-    MekaDriveN meka;
+    MekaDrive meka;
     MekaServo servoo;
     CapballDriver cap;
     Firing fire;
@@ -87,7 +87,7 @@ public class MekaOp extends OpMode{
         }
 
         try{
-            meka = new MekaDriveN(lCont, rCont, true, false);
+            meka = new MekaDrive(motfl, motfr, motrl, motrr, true, false);
             meka.setEnableExpo(false);
             telemetry.addData("Sucess: ", "MekaDrive Setup Complete.");
         }catch (Exception e){

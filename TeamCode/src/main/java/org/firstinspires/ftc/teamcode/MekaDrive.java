@@ -24,7 +24,7 @@ import java.util.Timer;
  * Getters and Setters              √√-
  */
 
-public class MekaDriveBACKUP extends OpMode {
+public class MekaDrive extends OpMode {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////// DEFAULT SETTINGS /////////////////////////////////////////
@@ -73,7 +73,7 @@ public class MekaDriveBACKUP extends OpMode {
 
     }
 
-    public MekaDriveBACKUP(DcMotor mot1, DcMotor mot2, DcMotor mot3, DcMotor mot4, boolean useEncoders, boolean isAutonomous) {
+    public MekaDrive(DcMotor mot1, DcMotor mot2, DcMotor mot3, DcMotor mot4, boolean useEncoders, boolean isAutonomous) {
         motFL = mot1;
         motFR = mot2;
         motBR = mot3;
