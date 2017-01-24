@@ -25,10 +25,12 @@ public class PixyCamDriver extends OpMode {
 
     public byte[] getData() {
 
+        telemetry.addData("Get data started ", ":)");
         cam.enableI2cReadMode(new I2cAddr(0x54), 0, 14);
         cam.getI2cReadCache();
         cam.getI2cReadCacheLock();
         data = cam.getCopyOfReadBuffer();
+        telemetry.addData("Going to return data ", ":)");
         return data;
 
     }
@@ -38,6 +40,7 @@ public class PixyCamDriver extends OpMode {
     }
 
     public short[] byteToShort(byte[] original) {
+        telemetry.addData("Byte to short started ", ":)");
         int k = original.length;
         short[] result;
         if (k % 2 != 0) {
@@ -48,11 +51,14 @@ public class PixyCamDriver extends OpMode {
         for (int i = 0; i < k/2; i++) {
             result[i] = mergeBytes(original[2*i + 1], original[2*i]);
         }
+        telemetry.addData("Byte to short done ", ":)");
         return result;
     }
 
     @Override
     public void init() {
+
+        telemetry.addData("Init started ", ":)");
 
         try {
             cam = hardwareMap.i2cDevice.get("Camera");
@@ -61,6 +67,7 @@ public class PixyCamDriver extends OpMode {
             telemetry.addData("ERROR",e.toString());
         }
 
+        telemetry.addData("Init done ", ":)");
     }
 
     @Override
