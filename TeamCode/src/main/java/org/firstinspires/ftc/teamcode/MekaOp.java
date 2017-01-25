@@ -3,8 +3,10 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.CRServo;
+import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorController;
+import com.qualcomm.robotcore.hardware.I2cDevice;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.Range;
 
@@ -32,14 +34,14 @@ public class MekaOp extends OpMode{
     //Basics
     //loader and button are not used
     DcMotorController lCont, rCont;
-    DcMotor motfl,motfr,motrr,motrl, shooter, motorLeft, motorRight;
-    CRServo gate, button, servoLeft, servoRight;
+    DcMotor motfl,motfr,motrr,motrl, loader, shooter;
+    CRServo gate, button;
     PikachuControl pika;
+
 
     //Drivers
     MekaDrive meka;
     MekaServo servoo;
-    CapballDriver cap;
     Firing fire;
     ButtonState joy1, joy2;
 
@@ -58,22 +60,9 @@ public class MekaOp extends OpMode{
         }catch (Exception e){
             telemetry.addData("ERROR:", e.toString());
         }
-        try {
-            lCont = hardwareMap.dcMotorController.get("leftDriveController");
-            rCont = hardwareMap.dcMotorController.get("rightDriveController");
-        }catch(Exception e){
-            telemetry.addData("ERROR: ", "LEGACY MODULE setup failure");
-        }
 
         try{
-            cap = new CapballDriver(servoLeft, servoRight, motorLeft, motorRight);
-            telemetry.addData("Sucess: ", "CapballDriver Setup Complete");
-        }catch (Exception e) {
-            telemetry.addData("ERROR: ", "CapballDriver Setup Failure.");
-        }
-
-        try{
-            fire = new Firing(shooter);
+            fire = new Firing(loader, shooter);
             telemetry.addData("Sucess: ", "Firing Setup Complete");
         }catch (Exception e) {
             telemetry.addData("ERROR: ", "Firing Setup Failure.");
@@ -129,6 +118,9 @@ public class MekaOp extends OpMode{
         telemetry.addData("LStickY 2: ", lStickyy);
         telemetry.addData("RStickY 2: ", rStickyy);
 
+        fire.SetLoadingPower(rStickyy);
+        fire.SetShootingPower(lStickyy);
+
         //Use b button to run the gate servo and y button to turn it the other way
         if(gamepad2.dpad_up){
             servoo.ToggleGate(1);
@@ -146,9 +138,6 @@ public class MekaOp extends OpMode{
         if(joy2.left_bumper){
             servoo.pressButton();
         }
-
-        cap.extendArm(lStickyy);
-        cap.raiseArm(rStickyy);
 
 
         /*DEPRECATED METHOD
@@ -242,20 +231,13 @@ public class MekaOp extends OpMode{
             telemetry.addData("ERROR",e.toString());
         }
 
-        //CapBall motors
         try {
-            motorLeft=hardwareMap.dcMotor.get("motL");
-            telemetry.addData("Confirmed: ", "motL");
+            shooter=hardwareMap.dcMotor.get("loader");
+            telemetry.addData("Confirmed: ", "Shooter");
         }catch (Exception e){
             telemetry.addData("ERROR",e.toString());
         }
 
-        try {
-            motorRight=hardwareMap.dcMotor.get("motR");
-            telemetry.addData("Confirmed: ", "motR");
-        }catch (Exception e){
-            telemetry.addData("ERROR",e.toString());
-        }
 
     }
 
@@ -277,19 +259,6 @@ public class MekaOp extends OpMode{
             telemetry.addData("ERROR",e.toString());
         }
 
-        try {
-            servoLeft=hardwareMap.crservo.get("servoL");
-            telemetry.addData("Confirmed: ", "servoL");
-        }catch (Exception e){
-            telemetry.addData("ERROR",e.toString());
-        }
-
-        try {
-            servoRight=hardwareMap.crservo.get("servoR");
-            telemetry.addData("Confirmed: ", "servoR");
-        }catch (Exception e){
-            telemetry.addData("ERROR",e.toString());
-        }
     }
 
 

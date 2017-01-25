@@ -1,3 +1,4 @@
+
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
@@ -8,7 +9,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 /**
  * Created by Emma on 01/13/17.
  */
-
+/*
 @Autonomous(name="Motor Catastrophe", group="Autonomous")
 public class MotorCatastropheOp extends OpMode {
 
@@ -59,3 +60,4 @@ public class MotorCatastropheOp extends OpMode {
     }
 
 }
+*/
