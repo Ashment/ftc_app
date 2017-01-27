@@ -225,15 +225,15 @@ public class MekaOp extends OpMode{
 
         //Shooting motors
         try {
-            shooter=hardwareMap.dcMotor.get("shooter");
+            shooter = hardwareMap.dcMotor.get("shooter");
             telemetry.addData("Confirmed: ", "Shooter");
         }catch (Exception e){
             telemetry.addData("ERROR",e.toString());
         }
 
         try {
-            shooter=hardwareMap.dcMotor.get("loader");
-            telemetry.addData("Confirmed: ", "Shooter");
+            loader = hardwareMap.dcMotor.get("loader");
+            telemetry.addData("Confirmed: ", "loader");
         }catch (Exception e){
             telemetry.addData("ERROR",e.toString());
         }

@@ -21,15 +21,16 @@ public class PixyCamDriver extends OpMode {
     private byte[] data;
     private short[] shortData;
     private static final String TAG = "CamDebugTag";
+    private int count;
 
 
     public byte[] getData() {
 
         Log.d(TAG, "getData Started.");
         telemetry.addData("Get data started ", ":)");
-        cam.enableI2cReadMode(new I2cAddr(0x54), 0, 14);
+        cam.enableI2cReadMode(new I2cAddr(0x54), 0, 12);
         cam.getI2cReadCacheLock();
-        data = cam.getI2cReadCache();
+        data = cam.getCopyOfReadBuffer();
         Log.d(TAG, "getData Returning.");
         telemetry.addData("Going to return data ", ":)");
         return data;
@@ -72,6 +73,7 @@ public class PixyCamDriver extends OpMode {
         }
         Log.i(TAG, "init Done");
         telemetry.addData("Init done ", ":)");
+
     }
 
     @Override
@@ -79,6 +81,7 @@ public class PixyCamDriver extends OpMode {
 
         Log.i(TAG, "loop start");
         getData();
+        count++;
         shortData = byteToShort(data);
         //String toPrintString = DatatoHexString(shortData);
         telemetry.addData("length of array: ", data.length);
@@ -86,11 +89,12 @@ public class PixyCamDriver extends OpMode {
 
         Log.d(TAG, "loop teletry updating...");
         telemetry.addData("array: ", data[0] + " " + data[1] + " " + data[2] + " " + data[3]
-                + " " + data[4] + " " + data[5] + " ");
-        telemetry.addData("array: ", shortData[0] + " " + shortData[1] + " " + shortData[2] + " "+ shortData[3]
+                + " " + data[4] + " " + data[5] + " count =" + count);
+        telemetry.addData("array: ", shortData[0] + " " + shortData[1] + " "                        + shortData[2] + " "+ shortData[3]
                 + " " + shortData[4] + " " + shortData[5] + " ");
         telemetry.addData("Now In Loop ",":)");
         Log.d(TAG, "loop telemetry update done.");
+
 
     }
 

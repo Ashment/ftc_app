@@ -23,7 +23,7 @@ public class MekaServo extends OpMode {
     private double gatePwr = 0.15;
 
     //In milliseconds
-    private long gateTime = 300;
+    private long gateTime = 830;
     private long buttonTime = 1400;
 
     Timer timer = new Timer();

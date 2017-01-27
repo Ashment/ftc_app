@@ -16,7 +16,7 @@ import java.util.TimerTask;
  */
 
 
-/*
+
 @Autonomous(name="Auto Testie", group="Autonomous")
 public class AutonomousOp extends OpMode {
 
@@ -111,7 +111,7 @@ public class AutonomousOp extends OpMode {
         startTime = getRuntime();
 
         try{
-            fire = new Firing(shooter);
+            fire = new Firing(loader, shooter);
             telemetry.addData("Sucess: ", "Firing Setup Complete");
         }catch (Exception e) {
             telemetry.addData("ERROR: ", "Firing Setup Failure.");
@@ -156,4 +156,3 @@ public class AutonomousOp extends OpMode {
     }
 
 }
-*/
