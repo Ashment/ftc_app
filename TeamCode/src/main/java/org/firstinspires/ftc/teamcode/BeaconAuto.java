@@ -113,7 +113,7 @@ public class BeaconAuto extends OpMode {
             case DRIVE_FOURTY_FIVE:
                 if(stateTime < stateTimes[0]) {
                     try {
-                        meka.SetRawStrafe(strafeDir[0], strafeDir[1]);
+                        meka.SetRawPower(pika.powerGraph(2, 315), pika.powerGraph(1, 315));
                     } catch (Exception e) {
                         telemetry.addData("DRIVEFORTYFIVE: ", e.toString());
                     }
